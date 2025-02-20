@@ -61,15 +61,8 @@ CREATE TABLE IF NOT EXISTS `userData` (
   `rollNumber` VARCHAR(50) NOT NULL,
   `phoneNumber` VARCHAR(15) NOT NULL,
   `roleID` INT DEFAULT 1,
-  `collegeName` VARCHAR(255) NOT NULL, 
-  `collegeCity` VARCHAR(255) NOT NULL,
   `userDepartment` VARCHAR(255) NOT NULL,
   `academicYear` INT NOT NULL,
-  `degree` VARCHAR(100) NOT NULL,
-  `needAccommodationDay1` BOOL DEFAULT FALSE,
-  `needAccommodationDay2` BOOL DEFAULT FALSE,
-  `needAccommodationDay3` BOOL DEFAULT FALSE,
-  `isAmrita` BOOL DEFAULT TRUE NOT NULL,   -- Represents if email is amrita mail or individual mail
   `accountStatus` CHAR(1) DEFAULT '1' NOT NULL CHECK(`accountStatus` IN ('0','1','2')),  -- '0':Blocked  '1':Not verified  '2':Verified
   `createdAt` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
   `updatedAt` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,

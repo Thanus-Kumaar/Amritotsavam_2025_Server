@@ -51,12 +51,8 @@ const authModule = {
                     userName: userData[0].userName,
                     rollNumber: userData[0].rollNumber,
                     phoneNumber: userData[0].phoneNumber,
-                    collegeName: userData[0].collegeName,
-                    collegeCity: userData[0].collegeCity,
                     userDepartment: userData[0].userDepartment,
                     academicYear: userData[0].academicYear,
-                    degree: userData[0].degree,
-                    isAmrita: userData[0].isAmrita,
                 },
             });
         } catch (err) {
@@ -76,15 +72,8 @@ const authModule = {
             userName,
             rollNumber,
             phoneNumber,
-            collegeName,
-            collegeCity,
             userDepartment,
             academicYear,
-            degree,
-            isAmrita,
-            needAccommodationDay1,
-            needAccommodationDay2,
-            needAccommodationDay3,
         } = userData;
 
         const db = await amritotsavamDb.promise().getConnection();
@@ -106,9 +95,9 @@ const authModule = {
 
             const query = `
         INSERT INTO userData 
-          (userEmail, userPassword, userName, rollNumber, phoneNumber, collegeName, collegeCity, userDepartment, academicYear, degree, isAmrita, needAccommodationDay1, needAccommodationDay2, needAccommodationDay3)
+          (userEmail, userPassword, userName, rollNumber, phoneNumber, userDepartment, academicYear)
         VALUES 
-          (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          (?, ?, ?, ?, ?, ?, ?)
       `;
 
             const values = [
@@ -117,15 +106,8 @@ const authModule = {
                 userName,
                 rollNumber,
                 phoneNumber,
-                collegeName,
-                collegeCity,
                 userDepartment,
                 academicYear,
-                degree,
-                isAmrita,
-                needAccommodationDay1,
-                needAccommodationDay2,
-                needAccommodationDay3,
             ];
 
             // Denotes that server entered the Transaction -> Needs rollback incase of error.

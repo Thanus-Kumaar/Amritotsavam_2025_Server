@@ -75,20 +75,6 @@ const validateSignupData = (data) => {
     }
 
     if (
-        typeof data.collegeName !== "string" ||
-        data.collegeName.trim().length === 0
-    ) {
-        return "Invalid or missing collegeName.";
-    }
-
-    if (
-        typeof data.collegeCity !== "string" ||
-        data.collegeCity.trim().length === 0
-    ) {
-        return "Invalid or missing collegeCity.";
-    }
-
-    if (
         typeof data.userDepartment !== "string" ||
         data.userDepartment.trim().length === 0
     ) {
@@ -99,42 +85,6 @@ const validateSignupData = (data) => {
         return "Invalid or missing academicYear.";
     }
 
-    if (typeof data.degree !== "string" || data.degree.trim().length === 0) {
-        return "Invalid or missing degree.";
-    }
-
-    // Validate isAmrita if provided
-    if (
-        data.isAmrita === null ||
-        typeof data.isAmrita != "boolean" ||
-        (data.isAmrita != false && data.isAmrita != true)
-    ) {
-        return "Invalid isAmrita Value";
-    }
-    if (
-        data.needAccommodationDay1 === null ||
-        typeof data.needAccommodationDay1 != "boolean" ||
-        (data.needAccommodationDay1 != false &&
-            data.needAccommodationDay1 != true)
-    ) {
-        return "Invalid Accommodation Day 1 Value";
-    }
-    if (
-        data.needAccommodationDay2 === null ||
-        typeof data.needAccommodationDay2 != "boolean" ||
-        (data.needAccommodationDay2 != false &&
-            data.needAccommodationDay2 != true)
-    ) {
-        return "Invalid Accommodation Day 2 Value";
-    }
-    if (
-        data.needAccommodationDay3 === null ||
-        typeof data.needAccommodationDay3 != "boolean" ||
-        (data.needAccommodationDay3 != false &&
-            data.needAccommodationDay3 != true)
-    ) {
-        return "Invalid Accommodation Day 3 Value";
-    }
     return null;
 };
 

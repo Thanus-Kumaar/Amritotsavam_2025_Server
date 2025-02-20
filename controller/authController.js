@@ -65,15 +65,8 @@ const authController = {
         "userName": "string",
         "rollNumber": "string",
         "phoneNumber": "string",
-        "collegeName": "string",
-        "collegeCity": "string",
         "userDepartment": "string",
         "academicYear": number,
-        "degree": "string",
-        "needAccommodationDay1" : "boolean",
-        "needAccommodationDay2" : "boolean",
-        "needAccommodationDay3" : "boolean",
-        "isAmrita" : "boolean"
     }
   */
     signup: async (req, res) => {
@@ -83,15 +76,8 @@ const authController = {
             userName,
             rollNumber,
             phoneNumber,
-            collegeName,
-            collegeCity,
             userDepartment,
             academicYear,
-            degree,
-            isAmrita,
-            needAccommodationDay1,
-            needAccommodationDay2,
-            needAccommodationDay3,
         } = req.body;
         // Validate input data
         const validationErrors = validateSignupData(req.body);
@@ -109,15 +95,8 @@ const authController = {
                 userName,
                 rollNumber,
                 phoneNumber,
-                collegeName,
-                collegeCity,
                 userDepartment,
                 academicYear,
-                degree,
-                isAmrita,
-                needAccommodationDay1,
-                needAccommodationDay2,
-                needAccommodationDay3,
             });
             return res
                 .status(response.responseCode)

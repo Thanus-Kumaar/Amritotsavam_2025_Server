@@ -83,24 +83,10 @@ authRouter.post("/forgotPassword", authController.forgotPassword);
  *                 type: string
  *               phoneNumber:
  *                 type: string
- *               collegeName:
- *                 type: string
- *               collegeCity:
- *                 type: string
  *               userDepartment:
  *                 type: string
  *               academicYear:
  *                 type: integer
- *               degree:
- *                 type: string
- *               needAccommodationDay1:
- *                 type: boolean
- *               needAccommodationDay2:
- *                 type: boolean
- *               needAccommodationDay3:
- *                 type: boolean
- *               isAmrita:
- *                 type: boolean
  *     responses:
  *       201:
  *         description: User registered successfully. OTP sent for verification.
