@@ -11,11 +11,11 @@ const validateEnv = () => {
         TXN_DB_NAME: "string",
         SECRET_KEY: "string",
         OTP_SECRET_KEY: "string",
-        MAILER_SERVICE: "string",
-        MAILER_HOST: "string",
-        MAILER_PORT: "number",
-        MAILER_USER: "string",
-        MAILER_PASS: "string",
+        // MAILER_SERVICE: "string",
+        // MAILER_HOST: "string",
+        // MAILER_PORT: "number",
+        // MAILER_USER: "string",
+        // MAILER_PASS: "string",
     };
     const isValid = Object.entries(rules).every(([key, type]) => {
         const value = process.env[key];
