@@ -38,15 +38,8 @@ const profileController = {
       "userName": "string",
       "rollNumber": "string",
       "phoneNumber": "string",
-      "collegeName": "string",
-      "collegeCity": "string",
       "userDepartment": "string",
       "academicYear": "number",
-      "degree": "string",
-      "needAccommodationDay1": "boolean",
-      "needAccommodationDay2": "boolean",
-      "needAccommodationDay3": "boolean",
-      "isAmrita": "boolean",
     }
     */
     editProfile: async (req, res) => {
@@ -55,15 +48,8 @@ const profileController = {
             userName,
             rollNumber,
             phoneNumber,
-            collegeName,
-            collegeCity,
             userDepartment,
             academicYear,
-            degree,
-            needAccommodationDay1,
-            needAccommodationDay2,
-            needAccommodationDay3,
-            isAmrita,
         } = req.body;
 
         const validationErrordata = validateProfileData(req.body);
@@ -80,15 +66,8 @@ const profileController = {
                 userName,
                 rollNumber,
                 phoneNumber,
-                collegeName,
-                collegeCity,
                 userDepartment,
                 academicYear,
-                degree,
-                needAccommodationDay1,
-                needAccommodationDay2,
-                needAccommodationDay3,
-                isAmrita,
             );
             return res
                 .status(response.responseCode)

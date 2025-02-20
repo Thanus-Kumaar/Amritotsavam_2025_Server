@@ -27,15 +27,8 @@ const profileModule = {
                 userData.userName,
                 userData.rollNumber,
                 userData.phoneNumber,
-                userData.collegeName,
-                userData.collegeCity,
                 userData.userDepartment,
                 userData.academicYear,
-                userData.degree,
-                userData.needAccommodationDay1,
-                userData.needAccommodationDay2,
-                userData.needAccommodationDay3,
-                userData.isAmrita,
                 (SELECT JSON_ARRAYAGG(
                     JSON_OBJECT(
                         'registrationID', registrationData.registrationID,
@@ -95,15 +88,8 @@ const profileModule = {
         userName,
         rollNumber,
         phoneNumber,
-        collegeName,
-        collegeCity,
         userDepartment,
         academicYear,
-        degree,
-        needAccommodationDay1,
-        needAccommodationDay2,
-        needAccommodationDay3,
-        isAmrita,
     ) => {
         const db = await amritotsavamDb.promise().getConnection();
         try {
@@ -118,30 +104,16 @@ const profileModule = {
             userName = ?,
             rollNumber = ?,
             phoneNumber = ?,
-            collegeName = ?,
-            collegeCity = ?,
             userDepartment = ?,
             academicYear = ?,
-            degree = ?,
-            needAccommodationDay1 = ?,
-            needAccommodationDay2 = ?,
-            needAccommodationDay3 = ?,
-            isAmrita = ?
             WHERE userID = ?;`;
 
             const [result] = await db.query(query, [
                 userName,
                 rollNumber,
                 phoneNumber,
-                collegeName,
-                collegeCity,
                 userDepartment,
                 academicYear,
-                degree,
-                needAccommodationDay1,
-                needAccommodationDay2,
-                needAccommodationDay3,
-                isAmrita,
                 userID,
             ]);
             if (result.affectedRows === 0) {

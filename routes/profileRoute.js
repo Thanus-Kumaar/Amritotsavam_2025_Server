@@ -57,33 +57,12 @@ profileRouter.get("/", tokenValidator("JWT"), profileController.getUserProfile);
  *               phoneNumber:
  *                 type: string
  *                 description: Contact phone number.
- *               collegeName:
- *                 type: string
- *                 description: Name of the college.
- *               collegeCity:
- *                 type: string
- *                 description: City where the college is located.
  *               userDepartment:
  *                 type: string
  *                 description: Department of study.
  *               academicYear:
  *                 type: number
  *                 description: Academic year of the user.
- *               degree:
- *                 type: string
- *                 description: Degree pursued by the user.
- *               needAccommodationDay1:
- *                 type: boolean
- *                 description: Whether accommodation is needed for Day 1.
- *               needAccommodationDay2:
- *                 type: boolean
- *                 description: Whether accommodation is needed for Day 2.
- *               needAccommodationDay3:
- *                 type: boolean
- *                 description: Whether accommodation is needed for Day 3.
- *               isAmrita:
- *                 type: boolean
- *                 description: Whether the user is from Amrita University.
  *     responses:
  *       200:
  *         description: Profile updated successfully.
