@@ -2,23 +2,23 @@ import {
     setResponseBadRequest,
     setResponseInternalError,
 } from "../utilities/response.js";
-import clubModule from "../module/clubModule.js";
+import deptModule from "../module/deptModule.js";
 import { logError } from "../utilities/errorLogger.js";
 import {
-    validateClubData,
-    validateClubID,
-} from "../utilities/dataValidator/club.js";
+    validateDeptData,
+    validateDeptID,
+} from "../utilities/dataValidator/dept.js";
 
-const clubController = {
-    // Fetch all clubs
-    getAllClubs: async (req, res) => {
+const deptController = {
+    // Fetch all depts
+    getAllDepts: async (req, res) => {
         try {
-            const response = await clubModule.getAllClubs();
+            const response = await deptModule.getAllDepts();
             return res
                 .status(response.responseCode)
                 .json(response.responseBody);
         } catch (error) {
-            logError(error, "clubController:getAllClubs", "db");
+            logError(error, "deptController:getAllDepts", "db");
             const response = setResponseInternalError();
             return res
                 .status(response.responseCode)
@@ -26,13 +26,13 @@ const clubController = {
         }
     },
 
-    // Add a new club
-    addClub: async (req, res) => {
-        const { clubName, imageUrl, clubHead, clubAbbrevation, godName } =
+    // Add a new dept
+    addDept: async (req, res) => {
+        const { deptName, imageUrl, deptHead, deptAbbrevation, godName } =
             req.body;
 
         // Validate input data
-        const validationError = validateClubData(req.body);
+        const validationError = validateDeptData(req.body);
         if (validationError) {
             const response = setResponseBadRequest(validationError);
             return res
@@ -41,19 +41,19 @@ const clubController = {
         }
 
         try {
-            // Add the club
-            const response = await clubModule.addClub({
-                clubName,
+            // Add the dept
+            const response = await deptModule.addDept({
+                deptName,
                 imageUrl,
-                clubHead,
-                clubAbbrevation,
+                deptHead,
+                deptAbbrevation,
                 godName,
             });
             return res
                 .status(response.responseCode)
                 .json(response.responseBody);
         } catch (error) {
-            logError(error, "clubController:addClub", "db");
+            logError(error, "deptController:addDept", "db");
             const response = setResponseInternalError();
             return res
                 .status(response.responseCode)
@@ -61,19 +61,19 @@ const clubController = {
         }
     },
 
-    // Edit a club
-    editClub: async (req, res) => {
+    // Edit a dept
+    editDept: async (req, res) => {
         const {
-            clubID,
-            clubName,
+            deptID,
+            deptName,
             imageUrl,
-            clubHead,
-            clubAbbrevation,
+            deptHead,
+            deptAbbrevation,
             godName,
         } = req.body;
 
         // Validate input data
-        const validationError = validateClubData(req.body);
+        const validationError = validateDeptData(req.body);
         if (validationError) {
             const response = setResponseBadRequest(validationError);
             return res
@@ -81,8 +81,8 @@ const clubController = {
                 .json(response.responseBody);
         }
 
-        // Validate club ID
-        const idValidationError = validateClubID(clubID);
+        // Validate dept ID
+        const idValidationError = validateDeptID(deptID);
         if (idValidationError) {
             const response = setResponseBadRequest(idValidationError);
             return res
@@ -91,20 +91,20 @@ const clubController = {
         }
 
         try {
-            // Edit the club
-            const response = await clubModule.editClub({
-                clubID,
-                clubName,
+            // Edit the dept
+            const response = await deptModule.editDept({
+                deptID,
+                deptName,
                 imageUrl,
-                clubHead,
-                clubAbbrevation,
+                deptHead,
+                deptAbbrevation,
                 godName,
             });
             return res
                 .status(response.responseCode)
                 .json(response.responseBody);
         } catch (error) {
-            logError(error, "clubController:editClub", "db");
+            logError(error, "deptController:editDept", "db");
             const response = setResponseInternalError();
             return res
                 .status(response.responseCode)
@@ -112,12 +112,12 @@ const clubController = {
         }
     },
 
-    // Remove a club
-    removeClub: async (req, res) => {
-        const { clubID } = req.body;
+    // Remove a dept
+    removeDept: async (req, res) => {
+        const { deptID } = req.body;
 
-        // Validate club ID
-        const idValidationError = validateClubID(clubID);
+        // Validate dept ID
+        const idValidationError = validateDeptID(deptID);
         if (idValidationError) {
             const response = setResponseBadRequest(idValidationError);
             return res
@@ -126,12 +126,12 @@ const clubController = {
         }
 
         try {
-            const response = await clubModule.removeClub(clubID);
+            const response = await deptModule.removeDept(deptID);
             return res
                 .status(response.responseCode)
                 .json(response.responseBody);
         } catch (error) {
-            logError(error, "clubController:removeClub", "db");
+            logError(error, "deptController:removeDept", "db");
             const response = setResponseInternalError();
             return res
                 .status(response.responseCode)
@@ -140,4 +140,4 @@ const clubController = {
     },
 };
 
-export default clubController;
+export default deptController;

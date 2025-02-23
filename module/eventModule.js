@@ -6,7 +6,7 @@ import {
 } from "../utilities/response.js";
 import { logError } from "../utilities/errorLogger.js";
 import { amritotsavamDb } from "../db/poolConnection.js";
-import { checkClubIDsExists } from "../utilities/dbUtilities/clubUtilities.js";
+import { checkDeptIDsExists } from "../utilities/dbUtilities/deptUtilities.js";
 import { checkOrganizerIDsExists } from "../utilities/dbUtilities/organizerUtilities.js";
 import { checkTagIDsExists } from "../utilities/dbUtilities/tagUtilities.js";
 import { getEventQueryFormatter } from "../utilities/dbUtilities/eventUtilities.js";
@@ -48,12 +48,12 @@ const eventModule = {
                 return setResponseBadRequest(organizersExists);
             }
 
-            // Checking if club IDs are present in the database
-            const clubsExists = await checkClubIDsExists([clubID], db);
-            if (clubsExists !== null) {
-                // console.log("Error Club not found");
+            // Checking if dept IDs are present in the database
+            const deptsExists = await checkDeptIDsExists([deptID], db);
+            if (deptsExists !== null) {
+                // console.log("Error Dept not found");
                 await db.rollback();
-                return setResponseBadRequest(clubsExists);
+                return setResponseBadRequest(deptsExists);
             }
 
             // Checking if tag IDs are present in the database
@@ -127,7 +127,7 @@ const eventModule = {
                 maxRegistrationsPerDept,
             ]);
             await db.query(
-                `INSERT INTO deptEventMapping (clubID, eventID) values ?`,
+                `INSERT INTO deptEventMapping (deptID, eventID) values ?`,
                 [registrationPerDept],
             );
             await db.commit();
@@ -155,8 +155,8 @@ const eventModule = {
         organizerData AS o READ, 
         tagEventMapping AS tem READ, 
         tagData AS t READ, 
-        clubEventMapping AS cem READ,  
-        clubData AS c READ,
+        deptEventMapping AS cem READ,  
+        deptData AS c READ,
         registrationData AS rg READ,
         groupDetail AS g READ`,
             );
@@ -184,8 +184,8 @@ const eventModule = {
         organizerData AS o READ, 
         tagEventMapping AS tem READ, 
         tagData AS t READ, 
-        clubEventMapping AS cem READ,  
-        clubData AS c READ,
+        deptEventMapping AS cem READ,  
+        deptData AS c READ,
         registrationData AS rg READ,
         groupDetail AS g READ`,
             );
@@ -232,28 +232,28 @@ const eventModule = {
             db.release();
         }
     },
-    // getEventForClub: async function (clubID, isLoggedIn, userID) {
+    // getEventForDept: async function (deptID, isLoggedIn, userID) {
     //     const db = await amritotsavamDb.promise().getConnection();
     //     try {
     //         await db.query(
-    //             `LOCK TABLES eventData AS e READ, 
-    //     organizerEventMapping AS oem READ, 
-    //     organizerData AS o READ, 
-    //     tagEventMapping AS tem READ, 
-    //     tagData AS t READ, 
-    //     clubEventMapping AS cem READ,  
-    //     clubData AS c READ,
+    //             `LOCK TABLES eventData AS e READ,
+    //     organizerEventMapping AS oem READ,
+    //     organizerData AS o READ,
+    //     tagEventMapping AS tem READ,
+    //     tagData AS t READ,
+    //     deptEventMapping AS cem READ,
+    //     deptData AS c READ,
     //     registrationData AS rg READ,
     //     groupDetail AS g READ`,
     //         );
     //         const query = getEventQueryFormatter(isLoggedIn, userID, {
-    //             clubID: clubID,
+    //             deptID: deptID,
     //         });
     //         const [events] = await db.query(query);
 
     //         if (events.length == 0) {
     //             return setResponseNotFound(
-    //                 "No events found for the given club!",
+    //                 "No events found for the given dept!",
     //             );
     //         }
     //         return setResponseOk("Event selected", events);
@@ -274,8 +274,8 @@ const eventModule = {
         organizerData AS o READ, 
         tagEventMapping AS tem READ, 
         tagData AS t READ, 
-        clubEventMapping AS cem READ,  
-        clubData AS c READ,
+        deptEventMapping AS cem READ,  
+        deptData AS c READ,
         registrationData AS rg READ,
         registrationData READ,
         groupDetail AS g READ`,
@@ -363,11 +363,11 @@ const eventModule = {
                 return setResponseBadRequest(organizersExists);
             }
 
-            // Checking if club IDs are present in the database
-            const clubsExists = await checkClubIDsExists([clubID], db);
-            if (clubsExists !== null) {
-                // console.log("Error Club not found");
-                return setResponseBadRequest(clubsExists);
+            // Checking if dept IDs are present in the database
+            const deptsExists = await checkDeptIDsExists([deptID], db);
+            if (deptsExists !== null) {
+                // console.log("Error Dept not found");
+                return setResponseBadRequest(deptsExists);
             }
 
             // Checking if tag IDs are present in the database
@@ -459,10 +459,9 @@ const eventModule = {
                 [tagEventMapping],
             );
 
-
             const [depts] = await db.query("SELECT deptID FROM deptData");
             console.log(depts);
-            const departments = depts.map((dept)=>dept.deptID)
+            const departments = depts.map((dept) => dept.deptID);
             await db.query(
                 `UPDATE deptEventMapping SET maxRegistrations = ? WHERE deptID IN ? AND eventID = ?`,
                 [maxRegistrationsPerDept, departments, eventID],

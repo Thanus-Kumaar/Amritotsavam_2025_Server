@@ -5,22 +5,22 @@ import {
     setResponseInternalError,
 } from "../utilities/response.js";
 import { logError } from "../utilities/errorLogger.js";
-import { checkDuplicateClub } from "../utilities/dbUtilities/clubUtilities.js";
+import { checkDuplicateDept } from "../utilities/dbUtilities/deptUtilities.js";
 
-const clubModule = {
-    // Fetch all clubs
-    getAllClubs: async () => {
+const deptModule = {
+    // Fetch all depts
+    getAllDepts: async () => {
         const db = await amritotsavamDb.promise().getConnection();
         try {
             // Use READ lock to ensure data consistency during reading
-            await db.query("LOCK TABLES clubData READ");
+            await db.query("LOCK TABLES deptData READ");
 
-            const query = "SELECT * FROM clubData";
+            const query = "SELECT * FROM deptData";
             const [result] = await db.query(query);
 
-            return setResponseOk("Club data fetched successfully", result);
+            return setResponseOk("Dept data fetched successfully", result);
         } catch (error) {
-            logError(error, "clubModule:getAllClubs", "db");
+            logError(error, "deptModule:getAllDepts", "db");
             return setResponseInternalError();
         } finally {
             await db.query("UNLOCK TABLES"); // Unlock tables
@@ -28,48 +28,48 @@ const clubModule = {
         }
     },
 
-    // Add a club
-    addClub: async (clubData) => {
+    // Add a dept
+    addDept: async (deptData) => {
         const db = await amritotsavamDb.promise().getConnection();
         try {
-            // Check if a duplicate club exists
-            const duplicateExists = await checkDuplicateClub({
-                clubName: clubData.clubName,
-                clubAbbrevation: clubData.clubAbbrevation,
+            // Check if a duplicate dept exists
+            const duplicateExists = await checkDuplicateDept({
+                deptName: deptData.deptName,
+                deptAbbrevation: deptData.deptAbbrevation,
                 db,
             });
             if (duplicateExists) {
                 return setResponseBadRequest(
-                    "A club with the same name or abbreviation already exists.",
+                    "A dept with the same name or abbreviation already exists.",
                 );
             }
 
             // Use WRITE lock to prevent other processes from modifying the table
-            await db.query("LOCK TABLES clubData WRITE");
+            await db.query("LOCK TABLES deptData WRITE");
 
             const query = `
-        INSERT INTO clubData (clubName, imageUrl, clubHead, clubAbbrevation, godName)
+        INSERT INTO deptData (deptName, imageUrl, deptHead, deptAbbrevation, godName)
         VALUES (?, ?, ?, ?, ?)
       `;
             const values = [
-                clubData.clubName,
-                clubData.imageUrl,
-                clubData.clubHead,
-                clubData.clubAbbrevation,
-                clubData.godName,
+                deptData.deptName,
+                deptData.imageUrl,
+                deptData.deptHead,
+                deptData.deptAbbrevation,
+                deptData.godName,
             ];
             const [result] = await db.query(query, values);
 
             // Check if insertion was successful
             if (result.affectedRows === 0) {
                 return setResponseInternalError(
-                    "Could not insert club into the database.",
+                    "Could not insert dept into the database.",
                 );
             }
 
-            return setResponseOk("Club added successfully", result.insertId);
+            return setResponseOk("Dept added successfully", result.insertId);
         } catch (error) {
-            logError(error, "clubModule:addClub", "db");
+            logError(error, "deptModule:addDept", "db");
             return setResponseInternalError();
         } finally {
             await db.query("UNLOCK TABLES"); // Unlock tables
@@ -77,49 +77,49 @@ const clubModule = {
         }
     },
 
-    // Edit a club
-    editClub: async (clubData) => {
+    // Edit a dept
+    editDept: async (deptData) => {
         const db = await amritotsavamDb.promise().getConnection();
         try {
-            // Check if a duplicate club exists
-            const duplicateExists = await checkDuplicateClub({
-                clubName: clubData.clubName,
-                clubAbbrevation: clubData.clubAbbrevation,
+            // Check if a duplicate dept exists
+            const duplicateExists = await checkDuplicateDept({
+                deptName: deptData.deptName,
+                deptAbbrevation: deptData.deptAbbrevation,
                 db,
-                excludeClubID: clubData.clubID,
+                excludeDeptID: deptData.deptID,
             });
             if (duplicateExists) {
                 return setResponseBadRequest(
-                    "A club with the same name or abbreviation already exists.",
+                    "A dept with the same name or abbreviation already exists.",
                 );
             }
 
             // Use WRITE lock to prevent other processes from modifying the table
-            await db.query("LOCK TABLES clubData WRITE");
+            await db.query("LOCK TABLES deptData WRITE");
 
             const query = `
-        UPDATE clubData 
-        SET clubName = ?, imageUrl = ?, clubHead = ?, clubAbbrevation = ?, godName = ?
-        WHERE clubID = ?
+        UPDATE deptData 
+        SET deptName = ?, imageUrl = ?, deptHead = ?, deptAbbrevation = ?, godName = ?
+        WHERE deptID = ?
       `;
             const values = [
-                clubData.clubName,
-                clubData.imageUrl,
-                clubData.clubHead,
-                clubData.clubAbbrevation,
-                clubData.godName,
-                clubData.clubID,
+                deptData.deptName,
+                deptData.imageUrl,
+                deptData.deptHead,
+                deptData.deptAbbrevation,
+                deptData.godName,
+                deptData.deptID,
             ];
             const [result] = await db.query(query, values);
 
             if (result.affectedRows === 0) {
                 return setResponseBadRequest(
-                    "Club not found or no changes made.",
+                    "Dept not found or no changes made.",
                 );
             }
-            return setResponseOk("Club updated successfully.");
+            return setResponseOk("Dept updated successfully.");
         } catch (error) {
-            logError(error, "clubModule:editClub", "db");
+            logError(error, "deptModule:editDept", "db");
             return setResponseInternalError();
         } finally {
             await db.query("UNLOCK TABLES"); // Unlock tables
@@ -127,24 +127,24 @@ const clubModule = {
         }
     },
 
-    // Remove a club
-    removeClub: async (clubID) => {
+    // Remove a dept
+    removeDept: async (deptID) => {
         const db = await amritotsavamDb.promise().getConnection();
         try {
             // Use WRITE lock to prevent other processes from modifying the table
-            await db.query("LOCK TABLES clubData WRITE");
+            await db.query("LOCK TABLES deptData WRITE");
 
-            const query = "DELETE FROM clubData WHERE clubID = ?";
-            const [result] = await db.query(query, [clubID]);
+            const query = "DELETE FROM deptData WHERE deptID = ?";
+            const [result] = await db.query(query, [deptID]);
 
             if (result.affectedRows === 0) {
                 return setResponseBadRequest(
-                    "Club not found or already deleted.",
+                    "Dept not found or already deleted.",
                 );
             }
-            return setResponseOk("Club removed successfully.");
+            return setResponseOk("Dept removed successfully.");
         } catch (error) {
-            logError(error, "clubModule:removeClub", "db");
+            logError(error, "deptModule:removeDept", "db");
             return setResponseInternalError();
         } finally {
             await db.query("UNLOCK TABLES"); // Unlock tables
@@ -153,4 +153,4 @@ const clubModule = {
     },
 };
 
-export default clubModule;
+export default deptModule;

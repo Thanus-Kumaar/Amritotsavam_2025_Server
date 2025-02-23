@@ -59,6 +59,8 @@ const eventRouter = Router();
  *                 type: string
  *               fifthPrice:
  *                 type: string
+ *               maxRegistrationsPerDept:
+ *                 type: number
  *               organizerIDs:
  *                 type: array
  *                 items:
@@ -67,8 +69,6 @@ const eventRouter = Router();
  *                 type: array
  *                 items:
  *                   type: number
- *              maxRegistrationsPerDept
- *                 type: number
  *     responses:
  *       200:
  *         description: Event created successfully
@@ -136,9 +136,9 @@ eventRouter.get(
 );
 
 // eventRouter.get(
-//     "/club/:clubID(\\d+)",
+//     "/dept/:deptID(\\d+)",
 //     loginSetter,
-//     eventController.getEventForClub,
+//     eventController.getEventForDept,
 // );
 
 /**

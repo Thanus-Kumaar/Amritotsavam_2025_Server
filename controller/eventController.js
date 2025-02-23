@@ -150,17 +150,17 @@ const eventController = {
                 .json(response.responseBody);
         }
     },
-    // getEventForClub: async (req, res) => {
-    //     const { clubID } = req.params;
-    //     if (!isValidID(clubID)) {
-    //         const response = setResponseBadRequest("valid club ID not found");
+    // getEventForDept: async (req, res) => {
+    //     const { deptID } = req.params;
+    //     if (!isValidID(deptID)) {
+    //         const response = setResponseBadRequest("valid dept ID not found");
     //         return res
     //             .status(response.responseCode)
     //             .json(response.responseBody);
     //     }
     //     try {
-    //         const response = await eventModule.getEventForClub(
-    //             clubID,
+    //         const response = await eventModule.getEventForDept(
+    //             deptID,
     //             req.body.isLoggedIn,
     //             req.body.userID,
     //         );
@@ -168,7 +168,7 @@ const eventController = {
     //             .status(response.responseCode)
     //             .json(response.responseBody);
     //     } catch (err) {
-    //         logError(err, "eventController:getEventForClub", "db");
+    //         logError(err, "eventController:getEventForDept", "db");
     //         const response = setResponseInternalError();
     //         return res
     //             .status(response.responseCode)

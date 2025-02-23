@@ -249,7 +249,7 @@ INSERT INTO `tagEventMapping` (`tagID`, `eventID`) VALUES
 (2, 3),
 (2, 4);
 
--- table for club data ------------------------------------------------------------------------------------
+-- table for dept data ------------------------------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `deptData` (
   `deptID` INT AUTO_INCREMENT PRIMARY KEY,
@@ -288,7 +288,7 @@ CREATE TABLE IF NOT EXISTS `notification` (
   `notificationID` INT AUTO_INCREMENT PRIMARY KEY,
   `title` VARCHAR(500) UNIQUE NOT NULL,
   `description` VARCHAR(2000) NOT NULL,
-  `author` VARCHAR(255) NOT NULL,  -- can be ASB, Pragati team, Clubs etc..
+  `author` VARCHAR(255) NOT NULL,  -- can be ASB, Pragati team, Depts etc..
   `venue` VARCHAR(500) NOT NULL,
   `startDate` VARCHAR(10) NOT NULL,
   `endDate` VARCHAR(10) NOT NULL,
