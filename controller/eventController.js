@@ -11,6 +11,7 @@ const eventController = {
     {
       "eventName": "string",
       "imageUrl": "string",
+      "videoUrl": "string" / null,
       "eventFee": number,
       "eventDescription": "string",
       "venue": "string",
@@ -19,24 +20,23 @@ const eventController = {
       "isGroup": "boolean",
       "maxTeamSize": number,
       "minTeamSize": number,
-      "eventDate": "character",
-      "maxRegistrations": number,
+      "eventDate": "string",
       "isPerHeadFee": "boolean",
       "firstPrice": "string",
       "secondPrice": "string",
       "thirdPrice": "string",
       "fourthPrice": "string",
       "fifthPrice": "string",
-      "godName": "string",
       "organizerIDs": [number, number,...],
       "tagIDs": [number, number,...],
-      "clubID": number
+      "maxRegistrationsPerDept": number,
     }
   */
     addEvent: async (req, res) => {
         const {
             eventName,
             imageUrl,
+            videoUrl,
             eventFee,
             eventDescription,
             venue,
@@ -44,17 +44,15 @@ const eventController = {
             rules,
             isGroup,
             eventDate,
-            maxRegistrations,
             isPerHeadFee,
             firstPrice,
             secondPrice,
             thirdPrice,
             fourthPrice,
             fifthPrice,
-            godName,
             organizerIDs,
             tagIDs,
-            clubID,
+            maxRegistrationsPerDept,
         } = req.body;
 
         //validating the req.body
@@ -79,6 +77,7 @@ const eventController = {
             const response = await eventModule.addEvent(
                 eventName,
                 imageUrl,
+                videoUrl,
                 eventFee,
                 eventDescription,
                 venue,
@@ -86,17 +85,15 @@ const eventController = {
                 rules,
                 isGroup,
                 eventDate,
-                maxRegistrations,
                 isPerHeadFee,
                 firstPrice,
                 secondPrice,
                 thirdPrice,
                 fourthPrice,
                 fifthPrice,
-                godName,
                 organizerIDs,
                 tagIDs,
-                clubID,
+                maxRegistrationsPerDept,
                 minTeamSize,
                 maxTeamSize,
             );
@@ -153,31 +150,31 @@ const eventController = {
                 .json(response.responseBody);
         }
     },
-    getEventForClub: async (req, res) => {
-        const { clubID } = req.params;
-        if (!isValidID(clubID)) {
-            const response = setResponseBadRequest("valid club ID not found");
-            return res
-                .status(response.responseCode)
-                .json(response.responseBody);
-        }
-        try {
-            const response = await eventModule.getEventForClub(
-                clubID,
-                req.body.isLoggedIn,
-                req.body.userID,
-            );
-            return res
-                .status(response.responseCode)
-                .json(response.responseBody);
-        } catch (err) {
-            logError(err, "eventController:getEventForClub", "db");
-            const response = setResponseInternalError();
-            return res
-                .status(response.responseCode)
-                .json(response.responseBody);
-        }
-    },
+    // getEventForClub: async (req, res) => {
+    //     const { clubID } = req.params;
+    //     if (!isValidID(clubID)) {
+    //         const response = setResponseBadRequest("valid club ID not found");
+    //         return res
+    //             .status(response.responseCode)
+    //             .json(response.responseBody);
+    //     }
+    //     try {
+    //         const response = await eventModule.getEventForClub(
+    //             clubID,
+    //             req.body.isLoggedIn,
+    //             req.body.userID,
+    //         );
+    //         return res
+    //             .status(response.responseCode)
+    //             .json(response.responseBody);
+    //     } catch (err) {
+    //         logError(err, "eventController:getEventForClub", "db");
+    //         const response = setResponseInternalError();
+    //         return res
+    //             .status(response.responseCode)
+    //             .json(response.responseBody);
+    //     }
+    // },
     getEventsRegisteredByUser: async (req, res) => {
         const { id } = req.params;
         // typeof id should be string(usually query params are strings).
@@ -210,6 +207,7 @@ const eventController = {
       "eventID": number,
       "eventName": "string",
       "imageUrl": "string",
+      "videoUrl": "string",
       "eventFee": number,
       "eventDescription": "string",
       "venue": "string",
@@ -218,18 +216,16 @@ const eventController = {
       "isGroup": "boolean",
       "maxTeamSize": number,
       "minTeamSize": number,
-      "eventDate": "character",
-      "maxRegistrations": number,
+      "eventDate": "string",
       "isPerHeadFee": "boolean",
       "firstPrice": "string",
       "secondPrice": "string",
       "thirdPrice": "string",
       "fourthPrice": "string",
       "fifthPrice": "string",
-      "godName": "string",
       "organizerIDs": [number, number,...],
       "tagIDs": [number, number,...],
-      "clubID": number
+      "maxRegistrationsPerDept": number
     }
   */
     editEvent: async (req, res) => {
@@ -237,6 +233,7 @@ const eventController = {
             eventID,
             eventName,
             imageUrl,
+            videoUrl,
             eventFee,
             eventDescription,
             venue,
@@ -244,17 +241,15 @@ const eventController = {
             rules,
             isGroup,
             eventDate,
-            maxRegistrations,
             isPerHeadFee,
             firstPrice,
             secondPrice,
             thirdPrice,
             fourthPrice,
             fifthPrice,
-            godName,
             organizerIDs,
             tagIDs,
-            clubID,
+            maxRegistrationsPerDept,
         } = req.body;
         if (!isValidID(eventID.toString())) {
             const response = setResponseBadRequest(
@@ -287,6 +282,7 @@ const eventController = {
                 eventID,
                 eventName,
                 imageUrl,
+                videoUrl,
                 eventFee,
                 eventDescription,
                 venue,
@@ -294,17 +290,15 @@ const eventController = {
                 rules,
                 isGroup,
                 eventDate,
-                maxRegistrations,
                 isPerHeadFee,
                 firstPrice,
                 secondPrice,
                 thirdPrice,
                 fourthPrice,
                 fifthPrice,
-                godName,
                 organizerIDs,
                 tagIDs,
-                clubID,
+                maxRegistrationsPerDept,
                 minTeamSize,
                 maxTeamSize,
             );

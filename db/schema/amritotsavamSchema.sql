@@ -34,11 +34,11 @@ DROP TABLE IF EXISTS `userData`;
 DROP TABLE IF EXISTS `userRole`;
 DROP TABLE IF EXISTS `organizerEventMapping`;
 DROP TABLE IF EXISTS `tagEventMapping`;
-DROP TABLE IF EXISTS `clubEventMapping`;
+DROP TABLE IF EXISTS `deptEventMapping`;
 DROP TABLE IF EXISTS `eventData`;
 DROP TABLE IF EXISTS `organizerData`;
 DROP TABLE IF EXISTS `tagData`;
-DROP TABLE IF EXISTS `clubData`;
+DROP TABLE IF EXISTS `deptData`;
 DROP TABLE IF EXISTS `notification`;
 
 -- table for user role ---------------------------------------------------------------------------
@@ -94,7 +94,8 @@ CREATE TABLE IF NOT EXISTS `eventData` (
   `eventID` INT AUTO_INCREMENT PRIMARY KEY,
   `eventName` VARCHAR(255) UNIQUE NOT NULL,
   `imageUrl` VARCHAR(255) NOT NULL,
-  `eventFee` INT NOT NULL,
+  `videoUrl` VARCHAR(255) DEFAULT NULL,
+  `eventFee` INT DEFAULT 0,
   `eventDescription` VARCHAR(5000) NOT NULL,
   `venue` VARCHAR(1000),
   `time` VARCHAR(5000),
@@ -102,38 +103,35 @@ CREATE TABLE IF NOT EXISTS `eventData` (
   `isGroup` BOOL DEFAULT FALSE,
   `maxTeamSize` INT DEFAULT 1 NOT NULL,
   `minTeamSize` INT DEFAULT 1 NOT NULL,
-  `eventDate` CHAR(1) NOT NULL CHECK(`eventDate` IN ('1','2','3')),  -- the day of the events, so that the original date can be changed
+  `eventDate` VARCHAR(255),
   `eventStatus` CHAR(1) DEFAULT '1' CHECK(`eventStatus` IN ('0','1','2')), -- Blocked, Open, Full
-  `numRegistrations` INT DEFAULT 0,
-  `maxRegistrations` INT NOT NULL DEFAULT 0,
   `isPerHeadFee` BOOL DEFAULT FALSE,
   `firstPrice` VARCHAR(255) DEFAULT NULL,
   `secondPrice` VARCHAR(255) DEFAULT NULL,
   `thirdPrice` VARCHAR(255) DEFAULT NULL,
   `fourthPrice` VARCHAR(255) DEFAULT NULL,
   `fifthPrice` VARCHAR(255) DEFAULT NULL,
-  `godName` VARCHAR(50) NOT NULL,
   `createdAt` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
   `updatedAt` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `eventData` (`eventName`, `imageUrl`, `eventFee`, `eventDescription`, `venue`, `time`, `isGroup`, `maxTeamSize`, `minTeamSize`, `eventDate`, `eventStatus`, `numRegistrations`, `maxRegistrations`, `isPerHeadFee`, `godName`, `createdAt`, `updatedAt`, `firstPrice`, `secondPrice`, `thirdPrice`) VALUES 
+INSERT INTO `eventData` (`eventName`, `imageUrl`, `eventFee`, `eventDescription`, `venue`, `time`, `isGroup`, `maxTeamSize`, `minTeamSize`, `eventDate`, `eventStatus`, `isPerHeadFee`, `createdAt`, `updatedAt`, `firstPrice`, `secondPrice`, `thirdPrice`) VALUES 
 ('THE RENAISSANCE CIRCUIT', 'https://example.com/hackathon.jpg', 400, 
 'Round 1 - The Arena\nTeams will be randomly paired to compete against each other in a competitive arena. Positioned on opposite sides, pairs will tackle 7 rapid-fire questions. Answer correctly to advance: one wrong move, and you''re out!\n
 \n
 Round 2 - The Forge of Innovation\nQualifying teams will tackle a real-world case study, showcasing their analytical skills and innovative ideas. Impress the jury with dynamic and engaging presentations to claim victory!\n
 \n
 Round 3 - Judgement\nIn the debate round, teams will be paired again to go head-to-head. Members will be assessed by the forum on key performance criteria. Stand out to secure your spot!'
-, 'CR4', 'Full day', TRUE, 5, 4, '1', '1', 0, 100, TRUE, 'Athena', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, "17,000 Rs", "8,000 Rs", "4,000 Rs"),
+, 'CR4', 'Full day', TRUE, 5, 4, '1', '1', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, "17,000 Rs", "8,000 Rs", "4,000 Rs"),
 ('OLYMPIAN CONCLAVE', 'https://example.com/quiz.jpg', 450, '
 Showcase your marketing brilliance in this dynamic competition! From creative charades and problem-solving to crafting live campaigns, this is your chance to win. Compete, create, and conquer! '
-, 'CR6', 'Full day', TRUE, 6, 3, '2', '1', 0, 50, TRUE, 'Hermes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '25,000 Rs', NULL, NULL),
+, 'CR6', 'Full day', TRUE, 6, 3, '2', '1', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '25,000 Rs', NULL, NULL),
 ('SOLO DANCE FREE STYLE', 'https://example.com/quiz.jpg', 200, '
 A captivating solo freestyle dance blending fluid, dynamic movements with wild abandon, embodying celebration, creativity, and divine intoxication. Elegantly merging power and grace, the performance transports the audience to a mythical realm of energy and allure.'
-, 'SKH', 'Full day', FALSE, 1, 1, '2', '1', 0, 50, TRUE, 'Hermes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '3,000 Rs', '1,500 Rs', NULL),
+, 'SKH', 'Full day', FALSE, 1, 1, '2', '1', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '3,000 Rs', '1,500 Rs', NULL),
 ('CANVA PAINTING', 'https://example.com/quiz.jpg', 250, '
 The painting blends classical mythology with contemporary elements, showcasing innovation, collaboration, and the joy of success in the corporate world. Rich colors and dynamic forms highlight the harmony between ancient wisdom and modern enterprise.'
-, 'ER4', 'Full day', FALSE, 1, 1, '1', '1', 0, 100, TRUE, 'Athena', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2,500 Rs', '1,000 Rs', NULL);
+, 'ER4', 'Full day', FALSE, 1, 1, '1', '1', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2,500 Rs', '1,000 Rs', NULL);
 
 -- table for registration details ------------------------------------------------------------------
 
@@ -253,34 +251,32 @@ INSERT INTO `tagEventMapping` (`tagID`, `eventID`) VALUES
 
 -- table for club data ------------------------------------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS `clubData` (
-  `clubID` INT AUTO_INCREMENT PRIMARY KEY,
-  `clubName` VARCHAR(255) NOT NULL,
-  `imageUrl` VARCHAR(255) NOT NULL,
-  `clubHead` VARCHAR(255),
-  `clubAbbrevation` VARCHAR(50),
-  `godName` VARCHAR(50) NOT NULL,
+CREATE TABLE IF NOT EXISTS `deptData` (
+  `deptID` INT AUTO_INCREMENT PRIMARY KEY,
+  `deptName` VARCHAR(255) NOT NULL,
   `createdAt` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
   `updatedAt` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `clubData` (`clubName`, `imageUrl`, `clubHead`, `clubAbbrevation`, `godName`, `createdAt`, `updatedAt`) VALUES 
-('Sanskriti', 'https://example.com/techclub.jpg', 'Naganathan', 'SKT', 'Zeus', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('Ozone', 'https://example.com/codingclub.jpg', 'Thanush', 'OZ', 'Apollo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('GenM', 'https://example.com/codingclub.jpg', 'Saran', 'GM', 'Apollo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO `deptData` (`deptName`, `createdAt`, `updatedAt`) VALUES 
+('Sanskriti', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('Ozone', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('GenM', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
--- table for mapping many-to-many relation between clubData and eventData ---------------------------------
+-- table for mapping many-to-many relation between deptData and event registrations ---------------------------------
 
-CREATE TABLE IF NOT EXISTS `clubEventMapping` (
-  `clubID` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `deptEventMapping` (
+  `deptID` INT NOT NULL,
   `eventID` INT NOT NULL,
-  PRIMARY KEY (`clubID`, `eventID`),
+  `numRegistrations` INT DEFAULT 0,
+  `maxRegistrations` INT NOT NULL DEFAULT 0,
+  PRIMARY KEY (`deptID`, `eventID`),
   CONSTRAINT FOREIGN KEY (`eventID`) REFERENCES `eventData` (`eventID`) ON DELETE CASCADE,
-  CONSTRAINT FOREIGN KEY (`clubID`) REFERENCES `clubData` (`clubID`) ON DELETE CASCADE
+  CONSTRAINT FOREIGN KEY (`deptID`) REFERENCES `deptData` (`deptID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `clubEventMapping` (`clubID`, `eventID`) VALUES 
+INSERT INTO `deptEventMapping` (`deptID`, `eventID`) VALUES 
 (1, 3),
 (1, 4),
 (2, 1),

@@ -27,6 +27,8 @@ const eventRouter = Router();
  *                 type: string
  *               imageUrl:
  *                 type: string
+ *               videoUrl:
+ *                 type: string
  *               eventFee:
  *                 type: number
  *               eventDescription:
@@ -45,8 +47,6 @@ const eventRouter = Router();
  *                 type: number
  *               eventDate:
  *                 type: string
- *               maxRegistrations:
- *                 type: number
  *               isPerHeadFee:
  *                 type: boolean
  *               firstPrice:
@@ -59,8 +59,6 @@ const eventRouter = Router();
  *                 type: string
  *               fifthPrice:
  *                 type: string
- *               godName:
- *                 type: string
  *               organizerIDs:
  *                 type: array
  *                 items:
@@ -69,7 +67,7 @@ const eventRouter = Router();
  *                 type: array
  *                 items:
  *                   type: number
- *               clubID:
+ *              maxRegistrationsPerDept
  *                 type: number
  *     responses:
  *       200:
@@ -137,37 +135,11 @@ eventRouter.get(
     eventController.getEventDetailsByID,
 );
 
-/**
- * @swagger
- * /api/event/club/{clubID}:
- *   get:
- *     summary: Get all events for a specific club by its ID.
- *     tags:
- *       - Events
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: clubID
- *         schema:
- *           type: integer
- *         required: true
- *         description: ID of the club to fetch events for
- *     responses:
- *       200:
- *         description: Events for the club fetched successfully
- *       400:
- *         description: Invalid club ID
- *       404:
- *         description: Club not found
- *       500:
- *         description: A problem from our side :(
- */
-eventRouter.get(
-    "/club/:clubID(\\d+)",
-    loginSetter,
-    eventController.getEventForClub,
-);
+// eventRouter.get(
+//     "/club/:clubID(\\d+)",
+//     loginSetter,
+//     eventController.getEventForClub,
+// );
 
 /**
  * @swagger
@@ -227,6 +199,9 @@ eventRouter.get(
  *               imageUrl:
  *                 type: string
  *                 description: URL of the event image
+ *               videoUrl:
+ *                 type: string
+ *                 description: URL of video associated with event (can be null)
  *               eventFee:
  *                 type: number
  *                 description: Fee for the event
@@ -255,9 +230,9 @@ eventRouter.get(
  *                 type: string
  *                 format: date-time
  *                 description: Date and time of the event
- *               maxRegistrations:
+ *               maxRegistrationsPerDept:
  *                 type: number
- *                 description: Maximum number of registrations allowed
+ *                 description: Maximum number of registrations allowed per department
  *               isPerHeadFee:
  *                 type: boolean
  *                 description: Indicates if the fee is per participant
@@ -276,9 +251,6 @@ eventRouter.get(
  *               fifthPrice:
  *                 type: string
  *                 descriptiong: Fifth Price for the event
- *               godName:
- *                 type: string
- *                 description: Name of the god associated with the event
  *               organizerIDs:
  *                 type: array
  *                 items:
@@ -289,9 +261,6 @@ eventRouter.get(
  *                 items:
  *                   type: integer
  *                 description: List of tag IDs
- *               clubID:
- *                 type: integer
- *                 description: ID of the club organizing the event
  *     responses:
  *       200:
  *         description: Event edited successfully

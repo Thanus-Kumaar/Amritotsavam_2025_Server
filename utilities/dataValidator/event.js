@@ -12,6 +12,12 @@ const validateAddEventData = (eventData) => {
         return "Invalid image url";
     }
     if (
+        !validateBasicString(eventData.videoUrl) ||
+        !validator.isURL(eventData.videoUrl)
+    ) {
+        if (eventData.videoUrl != null) return "Invalid video url";
+    }
+    if (
         typeof eventData.eventFee != "number" ||
         eventData.eventFee === null ||
         eventData.eventFee < 0
@@ -77,15 +83,15 @@ const validateAddEventData = (eventData) => {
             return "Invalid input for team size!";
         }
     }
-    if (!validateBasicString(eventData.eventDate, 1)) {
+    if (!validateBasicString(eventData.eventDate, 255)) {
         return "Invalid event date";
     }
     if (
-        typeof eventData.maxRegistrations != "number" ||
-        eventData.maxRegistrations === null ||
-        eventData.maxRegistrations < 0
+        typeof eventData.maxRegistrationsPerDept != "number" ||
+        eventData.maxRegistrationsPerDept === null ||
+        eventData.maxRegistrationsPerDept < 0
     ) {
-        return "Invalid max registration count";
+        return "Invalid max registration count for each department";
     }
     if (
         eventData.isPerHeadFee === null ||
@@ -93,9 +99,6 @@ const validateAddEventData = (eventData) => {
         (eventData.isPerHeadFee !== false && eventData.isPerHeadFee !== true)
     ) {
         return "Incorrect type for isPerHeadFee";
-    }
-    if (!validateBasicString(eventData.godName, 50)) {
-        return "Invalid god name";
     }
     if (
         !Array.isArray(eventData.tagIDs) ||
@@ -114,9 +117,6 @@ const validateAddEventData = (eventData) => {
         )
     ) {
         return "Empty organizer list or invalid entries";
-    }
-    if (typeof eventData.clubID != "number" || eventData.clubID === null) {
-        return "Invalid or empty club ID";
     }
     return null;
 };

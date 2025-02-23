@@ -15,6 +15,7 @@ const eventModule = {
     addEvent: async function (
         eventName,
         imageUrl,
+        videoUrl,
         eventFee,
         eventDescription,
         venue,
@@ -22,17 +23,15 @@ const eventModule = {
         rules,
         isGroup,
         eventDate,
-        maxRegistrations,
         isPerHeadFee,
         firstPrice,
         secondPrice,
         thirdPrice,
         fourthPrice,
         fifthPrice,
-        godName,
         organizerIDs,
         tagIDs,
-        clubID,
+        maxRegistrationsPerDept,
         minTeamSize,
         maxTeamSize,
     ) {
@@ -70,13 +69,14 @@ const eventModule = {
             transactionStarted = 1;
 
             const query = `
-      INSERT INTO eventData (eventName, imageUrl, eventFee, eventDescription, venue, time, rules,
-       isGroup, eventDate, maxRegistrations, isPerHeadFee, godName, minTeamSize, maxTeamSize, firstPrice, secondPrice, thirdPrice, fourthPrice, fifthPrice)
-      VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+      INSERT INTO eventData (eventName, imageUrl, videoUrl, eventFee, eventDescription, venue, time, rules,
+       isGroup, eventDate, isPerHeadFee, minTeamSize, maxTeamSize, firstPrice, secondPrice, thirdPrice, fourthPrice, fifthPrice, maxRegistrationsPerDept)
+      VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
       `;
             const values = [
                 eventName,
                 imageUrl,
+                videoUrl,
                 eventFee,
                 eventDescription,
                 venue,
@@ -84,9 +84,7 @@ const eventModule = {
                 rules,
                 isGroup,
                 eventDate,
-                maxRegistrations,
                 isPerHeadFee,
-                godName,
                 minTeamSize,
                 maxTeamSize,
                 firstPrice,
@@ -94,6 +92,7 @@ const eventModule = {
                 thirdPrice,
                 fourthPrice,
                 fifthPrice,
+                maxRegistrationsPerDept,
             ];
             const [insertData] = await db.query(query, values);
             const eventID = insertData.insertId;
@@ -121,10 +120,15 @@ const eventModule = {
                 [tagEventMapping],
             );
 
-            // Insert into clubEventMapping table
+            // Insert into deptEventMapping table
+            const [depts] = await db.query("SELECT deptID FROM deptData");
+            const registrationPerDept = depts.map((dept) => [
+                dept.deptID,
+                maxRegistrationsPerDept,
+            ]);
             await db.query(
-                `INSERT INTO clubEventMapping (clubID, eventID) values (?,?)`,
-                [clubID, eventID],
+                `INSERT INTO deptEventMapping (clubID, eventID) values ?`,
+                [registrationPerDept],
             );
             await db.commit();
             return setResponseOk("Event added successfully");
@@ -195,7 +199,9 @@ const eventModule = {
             }
             await db.query("UNLOCK TABLES");
             if (event[0].isRegistered == "1") {
-                await db.query("LOCK TABLES userData AS u READ, registrationData AS rg READ, groupDetail AS g READ, groupDetail AS g2 READ");
+                await db.query(
+                    "LOCK TABLES userData AS u READ, registrationData AS rg READ, groupDetail AS g READ, groupDetail AS g2 READ",
+                );
                 const [teamDetails] = await db.query(`
                     SELECT COALESCE(JSON_ARRAYAGG(
                         JSON_OBJECT(
@@ -214,7 +220,7 @@ const eventModule = {
                         AND g2.eventID = ${event[0].eventID}
                     WHERE g.eventID = ${event[0].eventID};
                 `);
-                const team = JSON.parse(teamDetails[0].teamDetails)
+                const team = JSON.parse(teamDetails[0].teamDetails);
                 event[0].teamDetails = team;
             }
             return setResponseOk("Event selected", event);
@@ -226,39 +232,39 @@ const eventModule = {
             db.release();
         }
     },
-    getEventForClub: async function (clubID, isLoggedIn, userID) {
-        const db = await amritotsavamDb.promise().getConnection();
-        try {
-            await db.query(
-                `LOCK TABLES eventData AS e READ, 
-        organizerEventMapping AS oem READ, 
-        organizerData AS o READ, 
-        tagEventMapping AS tem READ, 
-        tagData AS t READ, 
-        clubEventMapping AS cem READ,  
-        clubData AS c READ,
-        registrationData AS rg READ,
-        groupDetail AS g READ`,
-            );
-            const query = getEventQueryFormatter(isLoggedIn, userID, {
-                clubID: clubID,
-            });
-            const [events] = await db.query(query);
+    // getEventForClub: async function (clubID, isLoggedIn, userID) {
+    //     const db = await amritotsavamDb.promise().getConnection();
+    //     try {
+    //         await db.query(
+    //             `LOCK TABLES eventData AS e READ, 
+    //     organizerEventMapping AS oem READ, 
+    //     organizerData AS o READ, 
+    //     tagEventMapping AS tem READ, 
+    //     tagData AS t READ, 
+    //     clubEventMapping AS cem READ,  
+    //     clubData AS c READ,
+    //     registrationData AS rg READ,
+    //     groupDetail AS g READ`,
+    //         );
+    //         const query = getEventQueryFormatter(isLoggedIn, userID, {
+    //             clubID: clubID,
+    //         });
+    //         const [events] = await db.query(query);
 
-            if (events.length == 0) {
-                return setResponseNotFound(
-                    "No events found for the given club!",
-                );
-            }
-            return setResponseOk("Event selected", events);
-        } catch (err) {
-            logError(err, "eventModule:getEventDetailsByID", "db");
-            return setResponseInternalError();
-        } finally {
-            await db.query("UNLOCK TABLES");
-            db.release();
-        }
-    },
+    //         if (events.length == 0) {
+    //             return setResponseNotFound(
+    //                 "No events found for the given club!",
+    //             );
+    //         }
+    //         return setResponseOk("Event selected", events);
+    //     } catch (err) {
+    //         logError(err, "eventModule:getEventDetailsByID", "db");
+    //         return setResponseInternalError();
+    //     } finally {
+    //         await db.query("UNLOCK TABLES");
+    //         db.release();
+    //     }
+    // },
     getEventsRegisteredByUser: async function (id, isLoggedIn, userID) {
         const db = await amritotsavamDb.promise().getConnection();
         try {
@@ -309,6 +315,7 @@ const eventModule = {
         eventID,
         eventName,
         imageUrl,
+        videoUrl,
         eventFee,
         eventDescription,
         venue,
@@ -316,38 +323,36 @@ const eventModule = {
         rules,
         isGroup,
         eventDate,
-        maxRegistrations,
         isPerHeadFee,
         firstPrice,
         secondPrice,
         thirdPrice,
         fourthPrice,
         fifthPrice,
-        godName,
         organizerIDs,
         tagIDs,
-        clubID,
+        maxRegistrationsPerDept,
         minTeamSize,
         maxTeamSize,
     ) {
         const db = await amritotsavamDb.promise().getConnection();
         var transactionStarted = 0;
         try {
-            // Checking if new maxRegistrations is >= numRegistrations
-            await db.query("LOCK TABLES eventData READ");
-            const [rows] = await db.query(
-                `SELECT numRegistrations FROM eventData WHERE eventID = ?`,
-                [eventID],
-            );
-            if (rows.length === 0) {
-                return setResponseBadRequest("Event not found");
-            }
-            const numRegistrations = rows[0].numRegistrations;
-            if (maxRegistrations < numRegistrations) {
-                return setResponseBadRequest(
-                    "Maximum registrations must be greater than or equal to registered students!",
-                );
-            }
+            // // Checking if new maxRegistrations is >= numRegistrations
+            // await db.query("LOCK TABLES eventData READ");
+            // const [rows] = await db.query(
+            //     `SELECT numRegistrations FROM eventData WHERE eventID = ?`,
+            //     [eventID],
+            // );
+            // if (rows.length === 0) {
+            //     return setResponseBadRequest("Event not found");
+            // }
+            // const numRegistrations = rows[0].numRegistrations;
+            // if (maxRegistrations < numRegistrations) {
+            //     return setResponseBadRequest(
+            //         "Maximum registrations must be greater than or equal to registered students!",
+            //     );
+            // }
 
             // Checking if organizer IDs are present in the database
             const organizersExists = await checkOrganizerIDsExists(
@@ -381,6 +386,7 @@ const eventModule = {
         SET 
         eventName = ?, 
         imageUrl = ?, 
+        videoUrl = ?,
         eventFee = ?, 
         eventDescription = ?, 
         venue = ?, 
@@ -388,9 +394,7 @@ const eventModule = {
         rules = ?,
         isGroup = ?, 
         eventDate = ?, 
-        maxRegistrations = ?, 
         isPerHeadFee = ?, 
-        godName = ?, 
         minTeamSize = ?, 
         maxTeamSize = ?,
         firstPrice = ?,
@@ -398,15 +402,12 @@ const eventModule = {
         thirdPrice = ?,
         fourthPrice = ?,
         fifthPrice = ?,
-        eventStatus = CASE 
-          WHEN maxRegistrations <= numRegistrations THEN 2 
-          ELSE 1 
-        END
         WHERE eventID = ?
       `;
             const values = [
                 eventName,
                 imageUrl,
+                videoUrl,
                 eventFee,
                 eventDescription,
                 venue,
@@ -414,9 +415,7 @@ const eventModule = {
                 rules,
                 isGroup,
                 eventDate,
-                maxRegistrations,
                 isPerHeadFee,
-                godName,
                 minTeamSize,
                 maxTeamSize,
                 firstPrice,
@@ -443,9 +442,6 @@ const eventModule = {
             await db.query(`DELETE FROM tagEventMapping WHERE eventID = ?`, [
                 eventID,
             ]);
-            await db.query(`DELETE FROM clubEventMapping WHERE eventID = ?`, [
-                eventID,
-            ]);
 
             // Re-inserting updated mappings
             const organizerValues = organizerIDs.map((organizerID) => [
@@ -463,9 +459,13 @@ const eventModule = {
                 [tagEventMapping],
             );
 
+
+            const [depts] = await db.query("SELECT deptID FROM deptData");
+            console.log(depts);
+            const departments = depts.map((dept)=>dept.deptID)
             await db.query(
-                `INSERT INTO clubEventMapping (clubID, eventID) VALUES (?, ?)`,
-                [clubID, eventID],
+                `UPDATE deptEventMapping SET maxRegistrations = ? WHERE deptID IN ? AND eventID = ?`,
+                [maxRegistrationsPerDept, departments, eventID],
             );
 
             await db.commit();
