@@ -30,8 +30,6 @@ const getEventQueryFormatter = function (
         e.maxTeamSize,
         e.minTeamSize,
         e.eventStatus,
-        e.numRegistrations,
-        e.maxRegistrations,
         e.isPerHeadFee,
         e.imageUrl AS eventImageUrl,
         (
@@ -46,9 +44,6 @@ const getEventQueryFormatter = function (
             JOIN tagData t ON tem.tagID = t.tagID
             WHERE tem.eventID = e.eventID
         ) AS tags,
-        c.clubID,
-        c.clubName,
-        c.godName,
         CASE 
            WHEN EXISTS (
                 SELECT 1 
@@ -64,10 +59,6 @@ const getEventQueryFormatter = function (
             END AS isRegistered
         FROM
         eventData e
-        LEFT JOIN
-        clubEventMapping cem ON e.eventID = cem.eventID
-        LEFT JOIN
-        clubData c ON cem.clubID = c.clubID
         `;
         return query;
     }
@@ -79,6 +70,7 @@ const getEventQueryFormatter = function (
     e.eventDate,
     e.eventDescription,
     e.venue,
+    e.videoUrl,
     e.time,
     e.rules,
     e.eventFee,
@@ -86,8 +78,6 @@ const getEventQueryFormatter = function (
     e.maxTeamSize,
     e.minTeamSize,
     e.eventStatus,
-    e.numRegistrations,
-    e.maxRegistrations,
     e.isPerHeadFee,
     e.imageUrl AS eventImageUrl,
     e.firstPrice,
@@ -119,13 +109,6 @@ const getEventQueryFormatter = function (
         JOIN tagData t ON tem.tagID = t.tagID
         WHERE tem.eventID = e.eventID
     ) AS tags,
-
-    c.clubID,
-    c.clubName,
-    c.imageUrl AS clubImageUrl,
-    c.clubHead,
-    c.clubAbbrevation,
-    c.godName,
     CASE 
       WHEN EXISTS (
         SELECT 1 
@@ -140,11 +123,7 @@ const getEventQueryFormatter = function (
       ELSE '0'
     END AS isRegistered
     FROM
-      eventData e
-    LEFT JOIN
-      clubEventMapping cem ON e.eventID = cem.eventID
-    LEFT JOIN
-      clubData c ON cem.clubID = c.clubID`;
+      eventData e`;
     Object.entries(data).map((condition) => {
         if (firstCondition === true) {
             if (condition[0] == "eventIDs") {

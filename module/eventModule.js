@@ -62,7 +62,7 @@ const eventModule = {
 
             const query = `
       INSERT INTO eventData (eventName, imageUrl, videoUrl, eventFee, eventDescription, venue, time, rules,
-       isGroup, eventDate, isPerHeadFee, minTeamSize, maxTeamSize, firstPrice, secondPrice, thirdPrice, fourthPrice, fifthPrice, maxRegistrationsPerDept)
+       isGroup, eventDate, isPerHeadFee, minTeamSize, maxTeamSize, firstPrice, secondPrice, thirdPrice, fourthPrice, fifthPrice)
       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
       `;
             const values = [
@@ -84,7 +84,6 @@ const eventModule = {
                 thirdPrice,
                 fourthPrice,
                 fifthPrice,
-                maxRegistrationsPerDept,
             ];
             const [insertData] = await db.query(query, values);
             const eventID = insertData.insertId;
@@ -116,10 +115,11 @@ const eventModule = {
             const [depts] = await db.query("SELECT deptID FROM deptData");
             const registrationPerDept = depts.map((dept) => [
                 dept.deptID,
+                eventID,
                 maxRegistrationsPerDept,
             ]);
             await db.query(
-                `INSERT INTO deptEventMapping (deptID, eventID) values ?`,
+                `INSERT INTO deptEventMapping (deptID, eventID, maxRegistrations) values ?`,
                 [registrationPerDept],
             );
             await db.commit();
@@ -386,7 +386,7 @@ const eventModule = {
         secondPrice = ?,
         thirdPrice = ?,
         fourthPrice = ?,
-        fifthPrice = ?,
+        fifthPrice = ?
         WHERE eventID = ?
       `;
             const values = [
@@ -445,11 +445,10 @@ const eventModule = {
             );
 
             const [depts] = await db.query("SELECT deptID FROM deptData");
-            console.log(depts);
             const departments = depts.map((dept) => dept.deptID);
             await db.query(
                 `UPDATE deptEventMapping SET maxRegistrations = ? WHERE deptID IN ? AND eventID = ?`,
-                [maxRegistrationsPerDept, departments, eventID],
+                [maxRegistrationsPerDept, [departments], eventID],
             );
 
             await db.commit();
