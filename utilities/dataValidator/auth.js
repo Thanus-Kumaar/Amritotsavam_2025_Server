@@ -1,6 +1,16 @@
 import validator from "validator";
 import { validatePhoneNumber } from "./common.js";
 
+const allowedDepartments = [
+    "AI",
+    "CSE & Cyber",
+    "ECE",
+    "EEE",
+    "Int. Sciences & Mass Communication",
+    "Chemical, Civil & Aero",
+    "MEE",
+];
+
 // function that validates email
 const validateEmail = (email) => {
     if (
@@ -80,6 +90,9 @@ const validateSignupData = (data) => {
     ) {
         return "Invalid or missing userDepartment.";
     }
+
+    if (!allowedDepartments.includes(userData.userDepartment))
+        return "Department should be one of 7 default ones.";
 
     if (!validateAcademicYear(data.academicYear)) {
         return "Invalid or missing academicYear.";

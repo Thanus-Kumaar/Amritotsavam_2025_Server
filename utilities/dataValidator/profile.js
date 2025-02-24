@@ -5,6 +5,16 @@ import {
     validatePhoneNumber,
 } from "./common.js";
 
+const allowedDepartments = [
+    "AI",
+    "CSE & Cyber",
+    "ECE",
+    "EEE",
+    "Int. Sciences & Mass Communication",
+    "Chemical, Civil & Aero",
+    "MEE",
+];
+
 const validateProfileData = (userData) => {
     if (!isValidID(userData.userID)) {
         return "Invalid user ID given.";
@@ -24,6 +34,8 @@ const validateProfileData = (userData) => {
     ) {
         return "Invalid user department.";
     }
+    if (!allowedDepartments.includes(userData.userDepartment))
+        return "Department should be one of 7 default ones.";
     if (
         userData.academicYear &&
         (typeof userData.academicYear !== "number" ||

@@ -105,7 +105,7 @@ const profileModule = {
             rollNumber = ?,
             phoneNumber = ?,
             userDepartment = ?,
-            academicYear = ?,
+            academicYear = ?
             WHERE userID = ?;`;
 
             const [result] = await db.query(query, [
