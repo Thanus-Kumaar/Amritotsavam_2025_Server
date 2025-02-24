@@ -6,26 +6,28 @@ import authorizeRoles from "../middleware/auth/authRoleValidator.js";
 const deptRouter = Router();
 
 // Routes
-deptRouter.get("/", deptController.getAllDepts); // GET: Fetch all depts (No token validation required)
+deptRouter.get("/", deptController.getAllDepts);
 
 // Apply tokenValidator only for protected routes
-deptRouter.post(
-    "/",
-    tokenValidator("JWT"),
-    authorizeRoles([1]),
-    deptController.addDept,
-); // POST: Add a new dept
-deptRouter.put(
-    "/",
-    tokenValidator("JWT"),
-    authorizeRoles([1]),
-    deptController.editDept,
-); // PUT: Edit an existing dept
-deptRouter.delete(
-    "/",
-    tokenValidator("JWT"),
-    authorizeRoles([1]),
-    deptController.removeDept,
-); // DELETE: Remove a dept
+// deptRouter.post(
+//     "/",
+//     tokenValidator("JWT"),
+//     authorizeRoles([1]),
+//     deptController.addDept,
+// ); 
+
+// deptRouter.put(
+//     "/",
+//     tokenValidator("JWT"),
+//     authorizeRoles([1]),
+//     deptController.editDept,
+// ); 
+
+// deptRouter.delete(
+//     "/",
+//     tokenValidator("JWT"),
+//     authorizeRoles([1]),
+//     deptController.removeDept,
+// ); 
 
 export default deptRouter;
