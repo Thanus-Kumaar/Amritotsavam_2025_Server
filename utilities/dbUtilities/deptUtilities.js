@@ -21,7 +21,6 @@ const checkDeptIDsExists = async function (deptIDs, db) {
 // Check if a duplicate dept exists
 const checkDuplicateDept = async function ({
     deptName,
-    deptAbbrevation,
     db,
     excludeDeptID = null,
 }) {
@@ -29,9 +28,9 @@ const checkDuplicateDept = async function ({
         await db.query("LOCK TABLES deptData READ");
         let query = `
       SELECT * FROM deptData
-      WHERE (deptName = ? OR deptAbbrevation = ?)
+      WHERE (deptName = ?)
     `;
-        const params = [deptName, deptAbbrevation];
+        const params = [deptName];
 
         // Exclude the current dept ID for edit operations
         if (excludeDeptID) {

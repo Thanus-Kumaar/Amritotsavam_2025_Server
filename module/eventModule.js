@@ -48,14 +48,6 @@ const eventModule = {
                 return setResponseBadRequest(organizersExists);
             }
 
-            // Checking if dept IDs are present in the database
-            const deptsExists = await checkDeptIDsExists([deptID], db);
-            if (deptsExists !== null) {
-                // console.log("Error Dept not found");
-                await db.rollback();
-                return setResponseBadRequest(deptsExists);
-            }
-
             // Checking if tag IDs are present in the database
             const tagExists = await checkTagIDsExists(tagIDs, db);
             if (tagExists !== null) {
@@ -361,13 +353,6 @@ const eventModule = {
             );
             if (organizersExists !== null) {
                 return setResponseBadRequest(organizersExists);
-            }
-
-            // Checking if dept IDs are present in the database
-            const deptsExists = await checkDeptIDsExists([deptID], db);
-            if (deptsExists !== null) {
-                // console.log("Error Dept not found");
-                return setResponseBadRequest(deptsExists);
             }
 
             // Checking if tag IDs are present in the database

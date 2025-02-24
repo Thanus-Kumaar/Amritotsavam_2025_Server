@@ -28,8 +28,7 @@ const deptController = {
 
     // Add a new dept
     addDept: async (req, res) => {
-        const { deptName, imageUrl, deptHead, deptAbbrevation, godName } =
-            req.body;
+        const { deptName } = req.body;
 
         // Validate input data
         const validationError = validateDeptData(req.body);
@@ -44,10 +43,6 @@ const deptController = {
             // Add the dept
             const response = await deptModule.addDept({
                 deptName,
-                imageUrl,
-                deptHead,
-                deptAbbrevation,
-                godName,
             });
             return res
                 .status(response.responseCode)
@@ -63,14 +58,7 @@ const deptController = {
 
     // Edit a dept
     editDept: async (req, res) => {
-        const {
-            deptID,
-            deptName,
-            imageUrl,
-            deptHead,
-            deptAbbrevation,
-            godName,
-        } = req.body;
+        const { deptID, deptName } = req.body;
 
         // Validate input data
         const validationError = validateDeptData(req.body);
@@ -95,10 +83,6 @@ const deptController = {
             const response = await deptModule.editDept({
                 deptID,
                 deptName,
-                imageUrl,
-                deptHead,
-                deptAbbrevation,
-                godName,
             });
             return res
                 .status(response.responseCode)

@@ -29,6 +29,7 @@ const deptModule = {
     },
 
     // Add a dept
+    // TODO: when adding new department data, make sure to update the deptEventMapping too with new entries (the whole registration process relies on this.)
     addDept: async (deptData) => {
         const db = await amritotsavamDb.promise().getConnection();
         try {
@@ -84,13 +85,12 @@ const deptModule = {
             // Check if a duplicate dept exists
             const duplicateExists = await checkDuplicateDept({
                 deptName: deptData.deptName,
-                deptAbbrevation: deptData.deptAbbrevation,
                 db,
                 excludeDeptID: deptData.deptID,
             });
             if (duplicateExists) {
                 return setResponseBadRequest(
-                    "A dept with the same name or abbreviation already exists.",
+                    "A dept with the same name already exists.",
                 );
             }
 
@@ -99,15 +99,11 @@ const deptModule = {
 
             const query = `
         UPDATE deptData 
-        SET deptName = ?, imageUrl = ?, deptHead = ?, deptAbbrevation = ?, godName = ?
+        SET deptName = ? 
         WHERE deptID = ?
       `;
             const values = [
                 deptData.deptName,
-                deptData.imageUrl,
-                deptData.deptHead,
-                deptData.deptAbbrevation,
-                deptData.godName,
                 deptData.deptID,
             ];
             const [result] = await db.query(query, values);

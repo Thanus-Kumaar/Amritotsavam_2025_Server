@@ -276,11 +276,11 @@ CREATE TABLE IF NOT EXISTS `deptEventMapping` (
   CONSTRAINT FOREIGN KEY (`deptID`) REFERENCES `deptData` (`deptID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `deptEventMapping` (`deptID`, `eventID`) VALUES 
-(1, 3),
-(1, 4),
-(2, 1),
-(3, 2);
+INSERT INTO `deptEventMapping` (`deptID`, `eventID`, `maxRegistrations`) VALUES 
+(1, 3, 5),
+(1, 4, 5),
+(2, 1, 5),
+(3, 2, 5);
 
 -- table for handling notifications
 
