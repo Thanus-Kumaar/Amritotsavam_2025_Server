@@ -84,6 +84,21 @@ const registrationModule = {
             await db.query("UNLOCK TABLES");
 
             // checking if the registering user's dept has reach max registrations for the event
+            await db.query("LOCK TABLES deptEventMapping READ;");
+            const [currentRegistrationPerDepartment] = await db.query(
+                "SELECT * FROM deptEventMapping WHERE deptID = ? AND eventID = ?",
+                [userData[0].deptID, eventID],
+            );
+            await db.query("UNLOCK TABLES");
+
+            if (
+                currentRegistrationPerDepartment[0].numRegistrations + 1 >
+                currentRegistrationPerDepartment[0].maxRegistrations
+            ) {
+                return setResponseBadRequest(
+                    "You can't register as your department has reached max registrations for this event. We are sorry :(",
+                );
+            }
 
             /*---------------------------------------------------------------------------------------
                                                 PAYU PART BELOW                     
@@ -147,7 +162,7 @@ const registrationModule = {
                         phoneNumber,
                         productInfo,
                     ];
-                    console.log(data);
+                    // console.log(data);
                     appendFileSync(
                         "./logs/failedRegistrations.log",
                         `${new Date().getTime}-"transactionData Table Insertion Failed"-${data}`,
@@ -227,18 +242,24 @@ const registrationModule = {
 
                 // await db.query("LOCK TABLES eventData WRITE;");
 
-                // Blocking the Requested Seats for the User.
-                const [eventDataUpdate] = await db.query(
-                    "UPDATE eventData SET numRegistrations = ? WHERE eventID = ?",
-                    [eventData[0].numRegistrations + totalMembers, eventID],
+                // Blocking the Requested Seats for the User for his/her department.
+                const [registrationUpdated] = await db.query(
+                    "UPDATE deptEventMapping SET numRegistrations = ? WHERE eventID = ? AND deptID = ?",
+                    [
+                        currentRegistrationPerDepartment[0].numRegistrations +
+                            1,
+                        eventID,
+                        userData[0].deptID,
+                    ],
                 );
 
-                if (eventDataUpdate.affectedRows !== 1) {
+                if (registrationUpdated.affectedRows !== 1) {
                     console.log(
-                        "[ERROR]: Error in Inserting Udpating Seats in eventsData after Registration",
+                        "[ERROR]: Error in Inserting Udpating Seats in deptEventMapping after Registration",
                     );
                     const data = [
-                        eventData[0].numRegistrations + totalMembers,
+                        currentRegistrationPerDepartment[0].numRegistrations +
+                            1,
                         eventID,
                     ];
                     console.log(data);
@@ -493,18 +514,24 @@ const registrationModule = {
 
                 // await db.query("LOCK TABLES eventData WRITE;");
 
-                // Blocking the Requested Seats for the Team in the Event.
+                // Blocking the Requested Seats for the Team in the Event for his/her department.
                 const [eventDataUpdate] = await db.query(
-                    "UPDATE eventData SET numRegistrations = ? WHERE eventID = ?",
-                    [eventData[0].numRegistrations + totalMembers, eventID],
+                    "UPDATE deptEventMapping SET numRegistrations = ? WHERE eventID = ? AND deptID = ?",
+                    [
+                        currentRegistrationPerDepartment[0].numRegistrations +
+                            1,
+                        eventID,
+                        userData[0].deptID,
+                    ],
                 );
 
                 if (eventDataUpdate.affectedRows !== 1) {
                     console.log(
-                        "[ERROR]: Error in Inserting Updating Seats in eventData after Registration",
+                        "[ERROR]: Error in Inserting Updating Seats in deptEventMapping after Registration",
                     );
                     const data = [
-                        eventData[0].numRegistrations + totalMembers,
+                        currentRegistrationPerDepartment[0].numRegistrations +
+                            1,
                         eventID,
                     ];
                     console.log(data);
