@@ -15,11 +15,11 @@ const checkEventExistence = async function (eventID, totalMembers, db) {
             return setResponseBadRequest("Event Not Found");
         }
 
-        const convertedDate = convertDate(eventExists[0].eventDate);
+        const eventDate = eventExists[0].eventDate;
         const currDate = new Date();
         const formattedToday = currDate.toISOString().split("T")[0];
 
-        if (convertedDate <= formattedToday) {
+        if (eventDate <= formattedToday) {
             return setResponseBadRequest("Event has Completed !");
         }
 

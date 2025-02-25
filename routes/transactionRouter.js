@@ -22,7 +22,7 @@ const transactionRouter = Router();
  *             properties:
  *               txnID:
  *                 type: string
- *                 example: "TXN001"
+ *                 example: "ATXN001"
  *                 description: The transaction ID to be verified.
  *     responses:
  *       200:

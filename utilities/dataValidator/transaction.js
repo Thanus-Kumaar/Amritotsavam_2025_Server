@@ -7,7 +7,7 @@ const validateTransactionID = async (txnID, db) => {
 
     const transactionData = txnID.split("-");
 
-    if (transactionData[0] !== "TXN") {
+    if (transactionData[0] !== "ATXN") {
         return "Invalid Transaction ID !!";
     }
 

@@ -83,11 +83,13 @@ const registrationModule = {
 
             await db.query("UNLOCK TABLES");
 
+            // checking if the registering user's dept has reach max registrations for the event
+
             /*---------------------------------------------------------------------------------------
                                                 PAYU PART BELOW                     
             -----------------------------------------------------------------------------------------*/
 
-            const txnID = `TXN-${userID.toString()}-${eventID.toString()}-${new Date().getTime()}`;
+            const txnID = `ATXN-${userID.toString()}-${eventID.toString()}-${new Date().getTime()}`;
 
             let paymentAmount = 0;
             let productInfo = "";

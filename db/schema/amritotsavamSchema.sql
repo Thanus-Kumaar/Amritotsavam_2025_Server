@@ -160,8 +160,8 @@ CREATE TABLE IF NOT EXISTS `registrationData` (
 -- 7 -> EVENT WAS CANCELLED, refund also rejected.
 
 INSERT INTO `registrationData` (`eventID`, `txnID`, `amountPaid`, `totalMembers`, `teamName`, `userID`, `registrationStatus`, `createdAt`, `updatedAt`) VALUES 
-(1, 'TXN-2-1-1739608418732', 500, 2, 'Code Masters', 2, '2', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2, 'TXN-1-2-1739608433882', 200, 1, NULL, 3, '1', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(1, 'ATXN-2-1-1739608418732', 500, 2, 'Code Masters', 2, '2', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 'ATXN-1-2-1739608433882', 200, 1, NULL, 3, '1', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 -- table for group information ----------------------------------------------------------------------
