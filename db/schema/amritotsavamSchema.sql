@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `userData` (
   `rollNumber` VARCHAR(50) NOT NULL,
   `phoneNumber` VARCHAR(15) NOT NULL,
   `roleID` INT DEFAULT 1,
-  `userDepartment` VARCHAR(255) NOT NULL,
+  `deptID` INT NOT NULL,
   `academicYear` INT NOT NULL,
   `accountStatus` CHAR(1) DEFAULT '1' NOT NULL CHECK(`accountStatus` IN ('0','1','2')),  -- '0':Blocked  '1':Not verified  '2':Verified
   `createdAt` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -69,13 +69,13 @@ CREATE TABLE IF NOT EXISTS `userData` (
   CONSTRAINT FOREIGN KEY (`roleID`) REFERENCES `userRole` (`roleID`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-insert into `userData` (`academicYear`, `accountStatus`, `phoneNumber`, `roleID`, `rollNumber`, `userDepartment`, `userEmail`, `userID`, `userName`, `userPassword`) values (2022, '2', '8838517013', 1, 'CB.EN.U4CSE22447', 'CSE', 'thanuskumaara@gmail.com', 1, 'Thanus', 'c608f93243eefce1290a691f87aa2138af23c5b188b202f7f8afe9ea97ec51eb');
-insert into `userData` (`academicYear`, `accountStatus`, `phoneNumber`, `roleID`, `rollNumber`, `userDepartment`, `userEmail`, `userID`, `userName`, `userPassword`) values (2022, '2', '1234567895', 1, 'CB.EN.U4CSE22240', 'CSE', 'naganathan1555@gmail.com', 2, 'Naganathan', '21736c95b1e682f7abdee53019fd7e0ec7890bfee1a52be50cf024187fe7a0f4');
-insert into `userData` (`academicYear`, `accountStatus`, `phoneNumber`, `roleID`, `rollNumber`, `userDepartment`, `userEmail`, `userID`, `userName`, `userPassword`) values (2022, '2', '5045678555', 1, 'CB.EN.U4AIE220', 'AIE', 'sarandharshanpushparaj@gmail.com',3, 'Saran', '63def6a9b1444d3a5906bdd5b0e62334350402cfb344131b76270fc85f6eb383');
-insert into `userData` (`academicYear`, `accountStatus`, `phoneNumber`, `roleID`, `rollNumber`, `userDepartment`, `userEmail`, `userID`, `userName`, `userPassword`) values (2021, '2', '0000000011', 1, 'CB.EN.U4CSE21008', 'CSE', 'ash@admin.pragati', 4, 'Ashwin', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8');
-insert into `userData` (`academicYear`, `accountStatus`, `phoneNumber`, `roleID`, `rollNumber`, `userDepartment`, `userEmail`, `userID`, `userName`, `userPassword`) values (2024, '2', '5045678555', 1, 'CB.BU.P2ASB24118', 'MBA', 'cb.bu.p2asb24118@cb.students.amrita.edu',5, 'Venkatesh', '7acb757ff67d2c9acfe682972bc0716599c8d6d568ab2c3962c677b74c7a9015');
-insert into `userData` (`academicYear`, `accountStatus`, `phoneNumber`, `roleID`, `rollNumber`, `userDepartment`, `userEmail`, `userID`, `userName`, `userPassword`) values (2024, '2', '0000000011', 1, 'CB.BU.P2ASB23136', 'MBA', 'cb.bu.p2asb23136@cb.students.amrita.edu', 6, 'Rohith', '4c8aa2b81fed49d1334adae94ddd009aaa4bc23a2f7d4c71cca3acad62dd85e1');
-insert into `userData` (`academicYear`, `accountStatus`, `phoneNumber`, `roleID`, `rollNumber`, `userDepartment`, `userEmail`, `userID`, `userName`, `userPassword`) values (2024, '2', '0000000011', 1, 'CB.BU.P2ASB23117', 'MBA', 'cb.bu.p2asb23117@cb.students.amrita.edu', 7, 'Madridsta', 'dc22f903267b50ad4622c053e06c5123cc1eebe19f21e9a757f832d7cac1469d');
+insert into `userData` (`academicYear`, `accountStatus`, `phoneNumber`, `roleID`, `rollNumber`, `deptID`, `userEmail`, `userID`, `userName`, `userPassword`) values (2022, '2', '8838517013', 1, 'CB.EN.U4CSE22447', 1, 'thanuskumaara@gmail.com', 1, 'Thanus', 'c608f93243eefce1290a691f87aa2138af23c5b188b202f7f8afe9ea97ec51eb');
+insert into `userData` (`academicYear`, `accountStatus`, `phoneNumber`, `roleID`, `rollNumber`, `deptID`, `userEmail`, `userID`, `userName`, `userPassword`) values (2022, '2', '1234567895', 1, 'CB.EN.U4CSE22240', 1, 'naganathan1555@gmail.com', 2, 'Naganathan', '21736c95b1e682f7abdee53019fd7e0ec7890bfee1a52be50cf024187fe7a0f4');
+insert into `userData` (`academicYear`, `accountStatus`, `phoneNumber`, `roleID`, `rollNumber`, `deptID`, `userEmail`, `userID`, `userName`, `userPassword`) values (2022, '2', '5045678555', 1, 'CB.EN.U4AIE220', 2, 'sarandharshanpushparaj@gmail.com',3, 'Saran', '63def6a9b1444d3a5906bdd5b0e62334350402cfb344131b76270fc85f6eb383');
+insert into `userData` (`academicYear`, `accountStatus`, `phoneNumber`, `roleID`, `rollNumber`, `deptID`, `userEmail`, `userID`, `userName`, `userPassword`) values (2021, '2', '0000000011', 1, 'CB.EN.U4CSE21008', 3, 'ash@admin.pragati', 4, 'Ashwin', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8');
+insert into `userData` (`academicYear`, `accountStatus`, `phoneNumber`, `roleID`, `rollNumber`, `deptID`, `userEmail`, `userID`, `userName`, `userPassword`) values (2024, '2', '5045678555', 1, 'CB.BU.P2ASB24118', 1, 'cb.bu.p2asb24118@cb.students.amrita.edu',5, 'Venkatesh', '7acb757ff67d2c9acfe682972bc0716599c8d6d568ab2c3962c677b74c7a9015');
+insert into `userData` (`academicYear`, `accountStatus`, `phoneNumber`, `roleID`, `rollNumber`, `deptID`, `userEmail`, `userID`, `userName`, `userPassword`) values (2024, '2', '0000000011', 1, 'CB.BU.P2ASB23136', 4, 'cb.bu.p2asb23136@cb.students.amrita.edu', 6, 'Rohith', '4c8aa2b81fed49d1334adae94ddd009aaa4bc23a2f7d4c71cca3acad62dd85e1');
+insert into `userData` (`academicYear`, `accountStatus`, `phoneNumber`, `roleID`, `rollNumber`, `deptID`, `userEmail`, `userID`, `userName`, `userPassword`) values (2024, '2', '0000000011', 1, 'CB.BU.P2ASB23117', 5, 'cb.bu.p2asb23117@cb.students.amrita.edu', 7, 'Madridsta', 'dc22f903267b50ad4622c053e06c5123cc1eebe19f21e9a757f832d7cac1469d');
 
 -- table for temporary otp storage (Engine:in-memory storage) -----------------------------------------
 

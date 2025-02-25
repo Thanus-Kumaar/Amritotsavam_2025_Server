@@ -83,7 +83,7 @@ authRouter.post("/forgotPassword", authController.forgotPassword);
  *                 type: string
  *               phoneNumber:
  *                 type: string
- *               userDepartment:
+ *               deptID:
  *                 type: string
  *               academicYear:
  *                 type: integer

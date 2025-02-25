@@ -27,7 +27,7 @@ const profileModule = {
                 userData.userName,
                 userData.rollNumber,
                 userData.phoneNumber,
-                userData.userDepartment,
+                userData.deptID,
                 userData.academicYear,
                 (SELECT JSON_ARRAYAGG(
                     JSON_OBJECT(
@@ -88,7 +88,7 @@ const profileModule = {
         userName,
         rollNumber,
         phoneNumber,
-        userDepartment,
+        deptID,
         academicYear,
     ) => {
         const db = await amritotsavamDb.promise().getConnection();
@@ -104,7 +104,7 @@ const profileModule = {
             userName = ?,
             rollNumber = ?,
             phoneNumber = ?,
-            userDepartment = ?,
+            deptID = ?,
             academicYear = ?
             WHERE userID = ?;`;
 
@@ -112,7 +112,7 @@ const profileModule = {
                 userName,
                 rollNumber,
                 phoneNumber,
-                userDepartment,
+                deptID,
                 academicYear,
                 userID,
             ]);

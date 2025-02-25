@@ -51,7 +51,7 @@ const authModule = {
                     userName: userData[0].userName,
                     rollNumber: userData[0].rollNumber,
                     phoneNumber: userData[0].phoneNumber,
-                    userDepartment: userData[0].userDepartment,
+                    deptID: userData[0].deptID,
                     academicYear: userData[0].academicYear,
                 },
             });
@@ -72,7 +72,7 @@ const authModule = {
             userName,
             rollNumber,
             phoneNumber,
-            userDepartment,
+            deptID,
             academicYear,
         } = userData;
 
@@ -95,7 +95,7 @@ const authModule = {
 
             const query = `
         INSERT INTO userData 
-          (userEmail, userPassword, userName, rollNumber, phoneNumber, userDepartment, academicYear)
+          (userEmail, userPassword, userName, rollNumber, phoneNumber, deptID, academicYear)
         VALUES 
           (?, ?, ?, ?, ?, ?, ?)
       `;
@@ -106,7 +106,7 @@ const authModule = {
                 userName,
                 rollNumber,
                 phoneNumber,
-                userDepartment,
+                deptID,
                 academicYear,
             ];
 

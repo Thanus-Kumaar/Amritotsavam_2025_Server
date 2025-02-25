@@ -215,7 +215,7 @@ const adminModule = {
                             'userName', ud.userName,
                             'rollNumber', ud.rollNumber,
                             'phoneNumber', ud.phoneNumber,
-                            'userDepartment', ud.userDepartment,
+                            'deptID', ud.deptID,
                             'academicYear', ud.academicYear,
                         )
                     ) AS teamMembers
@@ -247,7 +247,7 @@ const adminModule = {
                 userData.userName,
                 userData.rollNumber,
                 userData.phoneNumber,
-                userData.userDepartment,
+                userData.deptID,
                 userData.academicYear,
                 FROM userData 
                 JOIN groupDetail
@@ -285,7 +285,7 @@ const adminModule = {
                 u.userName,
                 u.rollNumber,
                 u.phoneNumber,
-                u.userDepartment,
+                u.deptID,
                 u.academicYear,
                 u.roleID,
                 (SELECT JSON_ARRAYAGG(

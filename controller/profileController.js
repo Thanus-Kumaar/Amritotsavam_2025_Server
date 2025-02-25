@@ -38,7 +38,7 @@ const profileController = {
       "userName": "string",
       "rollNumber": "string",
       "phoneNumber": "string",
-      "userDepartment": "string",
+      "deptID": "number",
       "academicYear": "number",
     }
     */
@@ -48,7 +48,7 @@ const profileController = {
             userName,
             rollNumber,
             phoneNumber,
-            userDepartment,
+            deptID,
             academicYear,
         } = req.body;
 
@@ -66,7 +66,7 @@ const profileController = {
                 userName,
                 rollNumber,
                 phoneNumber,
-                userDepartment,
+                deptID,
                 academicYear,
             );
             return res

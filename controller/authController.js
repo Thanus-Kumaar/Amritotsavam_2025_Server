@@ -65,7 +65,7 @@ const authController = {
         "userName": "string",
         "rollNumber": "string",
         "phoneNumber": "string",
-        "userDepartment": "string",
+        "deptID": "number",
         "academicYear": number,
     }
   */
@@ -76,7 +76,7 @@ const authController = {
             userName,
             rollNumber,
             phoneNumber,
-            userDepartment,
+            deptID,
             academicYear,
         } = req.body;
         // Validate input data
@@ -95,7 +95,7 @@ const authController = {
                 userName,
                 rollNumber,
                 phoneNumber,
-                userDepartment,
+                deptID,
                 academicYear,
             });
             return res

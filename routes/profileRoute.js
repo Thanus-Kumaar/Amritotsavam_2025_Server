@@ -57,7 +57,7 @@ profileRouter.get("/", tokenValidator("JWT"), profileController.getUserProfile);
  *               phoneNumber:
  *                 type: string
  *                 description: Contact phone number.
- *               userDepartment:
+ *               deptID:
  *                 type: string
  *                 description: Department of study.
  *               academicYear:
