@@ -122,16 +122,16 @@ INSERT INTO `eventData` (`eventName`, `imageUrl`, `eventFee`, `eventDescription`
 Round 2 - The Forge of Innovation\nQualifying teams will tackle a real-world case study, showcasing their analytical skills and innovative ideas. Impress the jury with dynamic and engaging presentations to claim victory!\n
 \n
 Round 3 - Judgement\nIn the debate round, teams will be paired again to go head-to-head. Members will be assessed by the forum on key performance criteria. Stand out to secure your spot!'
-, 'CR4', 'Full day', TRUE, 5, 4, '1', '1', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, "17,000 Rs", "8,000 Rs", "4,000 Rs"),
+, 'CR4', 'Full day', TRUE, 5, 4, '2025-03-10', '1', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, "17,000 Rs", "8,000 Rs", "4,000 Rs"),
 ('OLYMPIAN CONCLAVE', 'https://example.com/quiz.jpg', 450, '
 Showcase your marketing brilliance in this dynamic competition! From creative charades and problem-solving to crafting live campaigns, this is your chance to win. Compete, create, and conquer! '
-, 'CR6', 'Full day', TRUE, 6, 3, '2', '1', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '25,000 Rs', NULL, NULL),
+, 'CR6', 'Full day', TRUE, 6, 3, '2025-03-21', '1', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '25,000 Rs', NULL, NULL),
 ('SOLO DANCE FREE STYLE', 'https://example.com/quiz.jpg', 200, '
 A captivating solo freestyle dance blending fluid, dynamic movements with wild abandon, embodying celebration, creativity, and divine intoxication. Elegantly merging power and grace, the performance transports the audience to a mythical realm of energy and allure.'
-, 'SKH', 'Full day', FALSE, 1, 1, '2', '1', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '3,000 Rs', '1,500 Rs', NULL),
+, 'SKH', 'Full day', FALSE, 1, 1, '2025-03-12', '1', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '3,000 Rs', '1,500 Rs', NULL),
 ('CANVA PAINTING', 'https://example.com/quiz.jpg', 250, '
 The painting blends classical mythology with contemporary elements, showcasing innovation, collaboration, and the joy of success in the corporate world. Rich colors and dynamic forms highlight the harmony between ancient wisdom and modern enterprise.'
-, 'ER4', 'Full day', FALSE, 1, 1, '1', '1', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2,500 Rs', '1,000 Rs', NULL);
+, 'ER4', 'Full day', FALSE, 1, 1, '2025-03-01', '1', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2,500 Rs', '1,000 Rs', NULL);
 
 -- table for registration details ------------------------------------------------------------------
 
@@ -282,9 +282,26 @@ CREATE TABLE IF NOT EXISTS `deptEventMapping` (
 
 INSERT INTO `deptEventMapping` (`deptID`, `eventID`, `maxRegistrations`) VALUES 
 (1, 3, 5),
-(1, 4, 5),
+(2, 3, 5),
+(3, 3, 5),
+(4, 3, 5),
+(5, 3, 5),
+(6, 3, 5),
+(7, 3, 5),
+(1, 1, 5),
 (2, 1, 5),
-(3, 2, 5);
+(3, 1, 5),
+(4, 1, 5),
+(5, 1, 5),
+(6, 1, 5),
+(7, 1, 5),
+(1, 2, 5),
+(2, 2, 5),
+(3, 2, 5),
+(4, 2, 5),
+(5, 2, 5),
+(6, 2, 5),
+(7, 2, 5);
 
 -- table for handling notifications
 
