@@ -144,7 +144,7 @@ const registrationModule = {
                         userEmail,
                         phoneNumber,
                         productInfo,
-                        "1",
+                        eventData[0].eventFee == 0 ? "2" : "1",
                     ],
                 );
 
@@ -176,7 +176,7 @@ const registrationModule = {
 
                 // Insert into registrationData Table.
                 const [insertRegistrationRecord] = await db.query(
-                    "INSERT INTO registrationData (eventID, userID, txnID, amountPaid, totalMembers, teamName) VALUES (?, ?, ?, ?, ?, ?)",
+                    "INSERT INTO registrationData (eventID, userID, txnID, amountPaid, totalMembers, teamName, registrationStatus) VALUES (?, ?, ?, ?, ?, ?, ?)",
                     [
                         eventID,
                         userID,
@@ -184,6 +184,7 @@ const registrationModule = {
                         paymentAmount,
                         totalMembers,
                         teamName,
+                        eventData[0].eventFee == 0 ? "2" : "1",
                     ],
                 );
 
@@ -379,7 +380,7 @@ const registrationModule = {
                         userEmail,
                         phoneNumber,
                         productInfo,
-                        "1",
+                        eventData[0].eventFee == 0 ? "2" : "1",
                     ],
                 );
 
@@ -411,7 +412,7 @@ const registrationModule = {
 
                 // Insert into registrationData Table.
                 const [insertRegistrationRecord] = await db.query(
-                    "INSERT INTO registrationData (eventID, userID, txnID, amountPaid, totalMembers, teamName) VALUES (?, ?, ?, ?, ?, ?)",
+                    "INSERT INTO registrationData (eventID, userID, txnID, amountPaid, totalMembers, teamName, registrationStatus) VALUES (?, ?, ?, ?, ?, ?, ?)",
                     [
                         eventID,
                         userID,
@@ -419,6 +420,7 @@ const registrationModule = {
                         paymentAmount,
                         totalMembers,
                         teamName,
+                        eventData[0].eventFee == 0 ? "2" : "1",
                     ],
                 );
 
