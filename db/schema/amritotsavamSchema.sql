@@ -116,20 +116,20 @@ CREATE TABLE IF NOT EXISTS `eventData` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `eventData` (`eventName`, `imageUrl`, `eventFee`, `eventDescription`, `venue`, `time`, `isGroup`, `maxTeamSize`, `minTeamSize`, `eventDate`, `eventStatus`, `isPerHeadFee`, `createdAt`, `updatedAt`, `firstPrice`, `secondPrice`, `thirdPrice`) VALUES 
-('THE RENAISSANCE CIRCUIT', 'https://example.com/hackathon.jpg', 400, 
+('THE RENAISSANCE CIRCUIT', 'https://example.com/hackathon.jpg', 20, 
 'Round 1 - The Arena\nTeams will be randomly paired to compete against each other in a competitive arena. Positioned on opposite sides, pairs will tackle 7 rapid-fire questions. Answer correctly to advance: one wrong move, and you''re out!\n
 \n
 Round 2 - The Forge of Innovation\nQualifying teams will tackle a real-world case study, showcasing their analytical skills and innovative ideas. Impress the jury with dynamic and engaging presentations to claim victory!\n
 \n
 Round 3 - Judgement\nIn the debate round, teams will be paired again to go head-to-head. Members will be assessed by the forum on key performance criteria. Stand out to secure your spot!'
 , 'CR4', 'Full day', TRUE, 5, 4, '2025-03-10', '1', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, "17,000 Rs", "8,000 Rs", "4,000 Rs"),
-('OLYMPIAN CONCLAVE', 'https://example.com/quiz.jpg', 450, '
+('OLYMPIAN CONCLAVE', 'https://example.com/quiz.jpg', 0, '
 Showcase your marketing brilliance in this dynamic competition! From creative charades and problem-solving to crafting live campaigns, this is your chance to win. Compete, create, and conquer! '
 , 'CR6', 'Full day', TRUE, 6, 3, '2025-03-21', '1', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '25,000 Rs', NULL, NULL),
-('SOLO DANCE FREE STYLE', 'https://example.com/quiz.jpg', 200, '
+('SOLO DANCE FREE STYLE', 'https://example.com/quiz.jpg', 10, '
 A captivating solo freestyle dance blending fluid, dynamic movements with wild abandon, embodying celebration, creativity, and divine intoxication. Elegantly merging power and grace, the performance transports the audience to a mythical realm of energy and allure.'
 , 'SKH', 'Full day', FALSE, 1, 1, '2025-03-12', '1', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '3,000 Rs', '1,500 Rs', NULL),
-('CANVA PAINTING', 'https://example.com/quiz.jpg', 250, '
+('CANVA PAINTING', 'https://example.com/quiz.jpg', 0, '
 The painting blends classical mythology with contemporary elements, showcasing innovation, collaboration, and the joy of success in the corporate world. Rich colors and dynamic forms highlight the harmony between ancient wisdom and modern enterprise.'
 , 'ER4', 'Full day', FALSE, 1, 1, '2025-03-01', '1', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2,500 Rs', '1,000 Rs', NULL);
 
