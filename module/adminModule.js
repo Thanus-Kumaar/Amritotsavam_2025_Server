@@ -239,16 +239,13 @@ const adminModule = {
                 eventData.isGroup,
                 eventData.eventDate,
                 eventData.eventStatus,
-                eventData.numRegistrations,
-                eventData.maxRegistrations,
                 eventData.isPerHeadFee,
-                eventData.godName,
                 userData.userEmail,
                 userData.userName,
                 userData.rollNumber,
                 userData.phoneNumber,
                 userData.deptID,
-                userData.academicYear,
+                userData.academicYear
                 FROM userData 
                 JOIN groupDetail
                     ON userData.userID = groupDetail.userID
