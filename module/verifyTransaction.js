@@ -89,14 +89,17 @@ export const verifyTransaction = async function (
         await transactionDB.beginTransaction();
 
         transactionStarted = 1;
-        if (transactionDetails.status === "Not Found" || transactionDetails.status === "failure") {
+        if (
+            transactionDetails.status === "Not Found" ||
+            transactionDetails.status === "failure"
+        ) {
             await transactionDB.query(
                 "UPDATE transactionData SET transactionStatus = '0' WHERE txnID = ?",
                 [txnID],
             );
 
             const [releaseSeats] = await db.query(
-                "SELECT registrationID, eventID, totalMembers FROM registrationData WHERE txnID = ?",
+                "SELECT registrationID, eventID, totalMembers, userID FROM registrationData WHERE txnID = ?",
                 [txnID],
             );
 
@@ -110,9 +113,20 @@ export const verifyTransaction = async function (
                     txnID,
                 ]);
 
+                const [userDeptID] = await db.query(
+                    "SELECT deptID FROM userData WHERE userID = ?",
+                    [releaseSeats[0].userID],
+                );
+
+                if (userDeptID.length == 0) {
+                    return setResponseBadRequest(
+                        "The user trying to verify transaction is not registered in amritotsavam!",
+                    );
+                }
+
                 await db.query(
-                    `UPDATE eventData SET numRegistrations = numRegistrations - ? WHERE eventID = ?`,
-                    [releaseSeats[0].totalMembers, releaseSeats[0].eventID],
+                    "UPDATE deptEventMapping SET numRegistrations = numRegistrations-1 WHERE eventID = ? AND deptID = ?",
+                    [releaseSeats[0].eventID, userDeptID[0].deptID],
                 );
             }
 
