@@ -3,6 +3,7 @@ import pandas as pd
 import os
 from dotenv import load_dotenv
 
+# Load environment variables
 load_dotenv()
 database_user = os.getenv("DB_USERNAME")
 database_password = os.getenv("DB_PWD")
@@ -50,27 +51,38 @@ def fetch_registration_data_to_dataframe():
         cursor.execute(query)
         registration_data = cursor.fetchall()
 
+        # Convert data to DataFrame
         df = pd.DataFrame(registration_data)
 
-        # Separate Free and Paid Events
-        free_events = df[df["Event Fee"] == 0]
-        paid_events = df[df["Event Fee"] > 0]
+        # Create event and workshop folders
+        os.makedirs("reports/events", exist_ok=True)
+        os.makedirs("reports/workshops", exist_ok=True)
 
-        os.makedirs("reports", exist_ok=True)
+        # Group data by Event Name
+        grouped = df.groupby("Event Name")
 
-        # Save to Excel (each file has 2 sheets)
-        with pd.ExcelWriter("reports/Events.xlsx") as writer:
-            free_events[free_events["Team Name"] == "-"].to_excel(writer, sheet_name="Individual Events", index=False)
-            free_events[free_events["Team Name"] != "-"].to_excel(writer, sheet_name="Group Events", index=False)
+        for event_name, event_data in grouped:
+            # Remove invalid characters from file name
+            safe_event_name = "".join(c if c.isalnum() or c in " _-" else "_" for c in event_name)
 
-        with pd.ExcelWriter("reports/Workshops.xlsx") as writer:
-            paid_events[paid_events["Team Name"] == "-"].to_excel(writer, sheet_name="Individual Workshops", index=False)
-            paid_events[paid_events["Team Name"] != "-"].to_excel(writer, sheet_name="Group Workshops", index=False)
+            # Determine if it's a workshop or an event
+            is_workshop = event_data["Event Fee"].iloc[0] > 0  # Workshops have a fee
 
-        print("Excel files generated successfully!")
+            # Set folder based on type
+            folder = "reports/workshops" if is_workshop else "reports/events"
+            file_path = os.path.join(folder, f"{safe_event_name}.xlsx")
+
+            # Save to Excel
+            with pd.ExcelWriter(file_path) as writer:
+                event_data.to_excel(writer, sheet_name=safe_event_name, index=False)
+
+            print(f"Saved: {file_path}")
+
+        print("All event and workshop reports generated successfully!")
 
     finally:
         cursor.close()
         connection.close()
 
+# Run the function
 fetch_registration_data_to_dataframe()

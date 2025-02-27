@@ -230,8 +230,8 @@ CREATE TABLE IF NOT EXISTS `tagData` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `tagData` (`tagName`, `tagAbbrevation`, `createdAt`, `updatedAt`) VALUES 
-('Management Games', 'MGS', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('Non Management Games', 'NGS', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('Event', 'EVT', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('Workshop ', 'WKSP', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- table for mapping many-to-many relation between tagData and eventData --------------------------------
 
