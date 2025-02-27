@@ -216,7 +216,7 @@ const adminModule = {
                             'rollNumber', ud.rollNumber,
                             'phoneNumber', ud.phoneNumber,
                             'deptID', ud.deptID,
-                            'academicYear', ud.academicYear,
+                            'academicYear', ud.academicYear
                         )
                     ) AS teamMembers
                 FROM groupDetail gd
