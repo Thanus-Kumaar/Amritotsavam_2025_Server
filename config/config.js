@@ -1,6 +1,6 @@
-import { availableParallelism } from "os";
+// import { availableParallelism } from "os";
 
-const numCPU = availableParallelism();
+const numCPU = 8;
 
 export const appConfig = {
     numCPU: numCPU,
