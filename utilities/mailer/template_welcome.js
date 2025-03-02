@@ -1,6 +1,6 @@
 const TEMPLATE_WELCOME = (userName) => {
     return `
-  <!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,8 +14,8 @@ const TEMPLATE_WELCOME = (userName) => {
             font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
         }
         body {
-            background: linear-gradient(135deg, #f0e6d2, #e6d8c3);
-            color: #2c3e50;
+            background: linear-gradient(135deg, #f7e1e5, #e6c3c9);
+            color: #4d0112;
             padding: 20px;
             display: flex;
             justify-content: center;
@@ -28,16 +28,16 @@ const TEMPLATE_WELCOME = (userName) => {
             background: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            border: 2px solid #a78b5c;
+            border: 2px solid #4d0112;
             text-align: center;
         }
         .header {
             font-size: 36px;
             font-weight: bold;
             text-transform: uppercase;
-            color: #5d4037;
+            color: #4d0112;
             margin-bottom: 10px;
-            background: linear-gradient(to right, #8e6e53, #c2a67d);
+            background: linear-gradient(to right, #7a0218, #a30423);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: 2px;
@@ -45,37 +45,24 @@ const TEMPLATE_WELCOME = (userName) => {
         .sub-header {
             font-size: 18px;
             font-style: italic;
-            color: #6f5136;
+            color: #7a0218;
             margin-bottom: 20px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
-        .logo-container {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .logo {
-            width: 100px;
-        }
-        .details {
-            font-size: 18px;
-            color: #5d4037;
-            background: linear-gradient(to right, #f2d7b3, #d1af8a);
-            padding: 10px;
-            border-radius: 10px;
-            display: inline-block;
-            margin: 10px 0;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        strong {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #7a0218;
         }
         .footer {
             font-size: 14px;
-            color: #6f5136;
+            color: #6d071a;
             margin-top: 20px;
             opacity: 0.8;
         }
         p {
             margin: 10px 0;
-            line-height: 1.6;
+            line-height: 1.5;
         }
         ul {
             list-style-type: none;
@@ -86,50 +73,39 @@ const TEMPLATE_WELCOME = (userName) => {
             .header {
                 font-size: 28px;
             }
-            .details {
-                font-size: 16px;
-            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="logo-container">
-            <img class="logo" src="https://b4ia3y8s78.ufs.sh/f/1rBJ3VmOgbeLRTo2PP4BcQ9dJivoLyXlq4CzWHZ8eSAR130p" alt="Amritotsavam Logo">
-        </div>
         <div class="header">Amritotsavam 2025 Invitation</div>
         <div class="content">
             <p>Dear ${userName},</p>
-            <p>We are thrilled to invite you to <strong>Amritotsavam 2025</strong>, an elite platform where innovation, strategy, and skill converge. Get ready to challenge yourself, connect with brilliant minds, and experience an event that celebrates excellence.</p>
+            <p><strong>Dive into Diversity at Amritotsavam 2025!</strong> Immerse yourself in a weekend of culture, creativity, and connection at <strong>Amrita Vishwa Vidyapeetham</strong> from <strong>March 20-22, 2025</strong>. 🎉 Don’t miss out on the celebration of art, music, and talent!</p>
             
-            <h3>Why Attend?</h3>
+            <h3>What is Amritotsavam?</h3>
+            <p>Amritotsavam is the grand cultural fest of <strong>Amrita Vishwa Vidyapeetham, Coimbatore</strong>. It is a vibrant platform where students showcase their talents and celebrate excellence in various art forms.</p>
+            
+            <h3>Categories of Events</h3>
             <ul>
-                <li>🔥 Compete in high-stakes challenges that test your skills and strategy.</li>
-                <li>🚀 Network with industry experts, mentors, and fellow participants.</li>
-                <li>🏆 Seize the opportunity to showcase your talent and win prestigious accolades.</li>
+                <li>💃 Dance</li>
+                <li>🎵 Music</li>
+                <li>🎭 Theatre</li>
+                <li>📖 Literary</li>
+                <li>🎨 Fine Arts</li>
             </ul>
-            <br />
-            <h3>Event Details</h3>
-            <p class="details">
-                📅 March 3rd & 4th, 2025<br>
-                📍 Amrita School of Business, Coimbatore
-            </p>
             
-            <p>Stay updated with event announcements, exclusive content, and more by following us on our social media platforms.</p>
-            
-            <p>We look forward to welcoming you to <strong>Amritotsavam'25</strong>—where the best rise to the challenge!</p>
+            <p>Join us for an unforgettable experience where creativity meets passion!</p>
         </div>
         <div class="footer">
             <strong>Best Regards,</strong><br>
-            Team Amritotsavam<br>
-            Amrita School of Business, Coimbatore<br>
-            <a href="https://pragati.amrita.edu/" target="_blank">https://pragati.amrita.edu/</a>
+            Team Amritotsavam 2025<br>
+            Amrita Vishwa Vidyapeetham, Coimbatore<br>
+
         </div>
     </div>
 </body>
-</html>
-
-  `;
+</html>`;
 };
 
 export default TEMPLATE_WELCOME;

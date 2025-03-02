@@ -14,8 +14,8 @@ const TEMPLATE_FORGOT_PASSWORD_OTP = (otp, userName) => {
             font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
         }
         body {
-            background: linear-gradient(135deg, #f0e6d2, #e6d8c3);
-            color: #2c3e50;
+            background: linear-gradient(135deg, #f7e1e5, #e6c3c9);
+            color: #4d0112;
             padding: 20px;
             display: flex;
             justify-content: center;
@@ -28,16 +28,16 @@ const TEMPLATE_FORGOT_PASSWORD_OTP = (otp, userName) => {
             background: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            border: 2px solid #a78b5c;
+            border: 2px solid #4d0112;
             text-align: center;
         }
         .header {
             font-size: 36px;
             font-weight: bold;
             text-transform: uppercase;
-            color: #5d4037;
+            color: #4d0112;
             margin-bottom: 10px;
-            background: linear-gradient(to right, #8e6e53, #c2a67d);
+            background: linear-gradient(to right, #7a0218, #a30423);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: 2px;
@@ -45,35 +45,30 @@ const TEMPLATE_FORGOT_PASSWORD_OTP = (otp, userName) => {
         .sub-header {
             font-size: 18px;
             font-style: italic;
-            color: #6f5136;
+            color: #7a0218;
             margin-bottom: 20px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-        }
-        .hero-image {
-            width: 90px;
-            height: auto;
-            margin-bottom: 20px;
         }
         strong {
             font-size: 1.1em;
             font-weight: bold;
-            color: #8e6e53;
+            color: #7a0218;
         }
         .otp {
             font-size: 32px;
             font-weight: bold;
-            color: #5d4037;
-            background: linear-gradient(to right, #f2d7b3, #d1af8a);
+            color: #4d0112;
+            background: linear-gradient(to right,rgb(254, 213, 209), #f5b5a9);
             padding: 10px 20px;
             border-radius: 10px;
             display: inline-block;
             margin: 20px 0;
             letter-spacing: 4px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
         }
         .footer {
             font-size: 14px;
-            color: #6f5136;
+            color: #6d071a;
             margin-top: 20px;
             opacity: 0.8;
         }
@@ -97,8 +92,6 @@ const TEMPLATE_FORGOT_PASSWORD_OTP = (otp, userName) => {
     <div class="container">
         <div class="header">Amritotsavam 2025</div>
         <div class="sub-header">Reset Your Password</div>
-
-        <img class="hero-image" src="https://b4ia3y8s78.ufs.sh/f/1rBJ3VmOgbeLRTo2PP4BcQ9dJivoLyXlq4CzWHZ8eSAR130p" alt="Amritotsavam Logo" />
 
         <p>Dear <strong>${userName}</strong>,</p>
 

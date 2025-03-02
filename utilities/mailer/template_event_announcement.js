@@ -1,5 +1,6 @@
 const TEMPLATE_EVENT_ANNOUNCEMENT = (eventName, announcement) => {
     return `
+    
     <!DOCTYPE html>
 <html lang="en">
 
@@ -8,15 +9,15 @@ const TEMPLATE_EVENT_ANNOUNCEMENT = (eventName, announcement) => {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amritotsavam 2025 | Event Announcement</title>
     <style>
-* {
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
         }
         body {
-            background: linear-gradient(135deg, #f0e6d2, #e6d8c3);
-            color: #2c3e50;
+            background: linear-gradient(135deg, #f9f0e3, #f2d8c7);
+            color: #4d0112;
             padding: 20px;
             display: flex;
             justify-content: center;
@@ -26,19 +27,19 @@ const TEMPLATE_EVENT_ANNOUNCEMENT = (eventName, announcement) => {
         .container {
             max-width: 600px;
             padding: 35px;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            border: 2px solid #a78b5c;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border: 2px solid #4d0112;
             text-align: center;
         }
         .header {
             font-size: 36px;
             font-weight: bold;
             text-transform: uppercase;
-            color: #5d4037;
+            color: #4d0112;
             margin-bottom: 10px;
-            background: linear-gradient(to right, #8e6e53, #c2a67d);
+            background: linear-gradient(to right, #6d071a, #b81b3c);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: 2px;
@@ -46,34 +47,29 @@ const TEMPLATE_EVENT_ANNOUNCEMENT = (eventName, announcement) => {
         .sub-header {
             font-size: 18px;
             font-style: italic;
-            color: #6f5136;
+            color: #6d071a;
             margin-bottom: 20px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-        }
-        .hero-image {
-            width: 90px;
-            height: auto;
-            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.15);
         }
         strong {
             font-size: 1.1em;
             font-weight: bold;
-            color: #8e6e53;
+            color: #6d071a;
         }
         .details {
             font-size: 18px;
-            color: #5d4037;
-            background: linear-gradient(to right, #f2d7b3, #d1af8a);
+            color: #4d0112;
+            background: linear-gradient(to right, #f9dbd8, #f5b5a9);
             padding: 10px;
             border-radius: 10px;
             display: inline-block;
             margin: 10px 0;
             letter-spacing: 1px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
         }
         .footer {
             font-size: 14px;
-            color: #6f5136;
+            color: #6d071a;
             margin-top: 20px;
             opacity: 0.8;
         }
@@ -94,15 +90,13 @@ const TEMPLATE_EVENT_ANNOUNCEMENT = (eventName, announcement) => {
 
 <body>
     <div class="container">
-        <div class="logo-container">
-            <img class="logo" src="https://b4ia3y8s78.ufs.sh/f/1rBJ3VmOgbeLRTo2PP4BcQ9dJivoLyXlq4CzWHZ8eSAR130p" alt="Amritotsavam Logo">
-        </div>
-        <div class="header">${eventName} - Announcement</div>
+        <div class="header">Amritotsavam</div>
+        <div class="sub-header">${eventName} - Announcement</div>
         <div class="content">
             <p>${announcement}</p>
         </div>
         <div class="footer">
-            &copy; 2025 Event Team. All Rights Reserved.
+            &copy; 2025 Amritotsavam. All Rights Reserved.
         </div>
     </div>
 </body>

@@ -19,8 +19,8 @@ const TEMPLATE_EVENT_REGISTRATION_OTP = (
             font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
         }
         body {
-            background: linear-gradient(135deg, #f0e6d2, #e6d8c3);
-            color: #2c3e50;
+            background: linear-gradient(135deg, #f7e1e5, #e6c3c9);
+            color: #4d0112;
             padding: 20px;
             display: flex;
             justify-content: center;
@@ -33,16 +33,16 @@ const TEMPLATE_EVENT_REGISTRATION_OTP = (
             background: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            border: 2px solid #a78b5c;
+            border: 2px solid #4d0112;
             text-align: center;
         }
         .header {
             font-size: 36px;
             font-weight: bold;
             text-transform: uppercase;
-            color: #5d4037;
+            color: #4d0112;
             margin-bottom: 10px;
-            background: linear-gradient(to right, #8e6e53, #c2a67d);
+            background: linear-gradient(to right, #7a0218, #a30423);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: 2px;
@@ -50,24 +50,19 @@ const TEMPLATE_EVENT_REGISTRATION_OTP = (
         .sub-header {
             font-size: 18px;
             font-style: italic;
-            color: #6f5136;
+            color: #7a0218;
             margin-bottom: 20px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-        }
-        .hero-image {
-            width: 90px;
-            height: auto;
-            margin-bottom: 20px;
         }
         strong {
             font-size: 1.1em;
             font-weight: bold;
-            color: #8e6e53;
+            color: #7a0218;
         }
         .details {
             font-size: 18px;
-            color: #5d4037;
-            background: linear-gradient(to right, #f2d7b3, #d1af8a);
+            color: #4d0112;
+            background: linear-gradient(to right, #f8c4cc, #e08a94);
             padding: 10px;
             border-radius: 10px;
             display: inline-block;
@@ -77,7 +72,7 @@ const TEMPLATE_EVENT_REGISTRATION_OTP = (
         }
         .footer {
             font-size: 14px;
-            color: #6f5136;
+            color: #7a0218;
             margin-top: 20px;
             opacity: 0.8;
         }
@@ -100,8 +95,6 @@ const TEMPLATE_EVENT_REGISTRATION_OTP = (
     <div class="container">
         <div class="header">Amritotsavam 2025</div>
         <div class="sub-header">Event Registration Confirmation</div>
-
-        <img class="hero-image" src="https://b4ia3y8s78.ufs.sh/f/1rBJ3VmOgbeLRTo2PP4BcQ9dJivoLyXlq4CzWHZ8eSAR130p" alt="Amritotsavam Logo" />
 
         <p>Dear <strong>${userName}</strong>,</p>
 
