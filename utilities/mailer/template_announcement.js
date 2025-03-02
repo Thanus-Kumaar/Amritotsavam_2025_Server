@@ -38,7 +38,6 @@ const TEMPLATE_ANNOUNCEMENT = (announcement) => {
             text-transform: uppercase;
             color: #4d0112;
             margin-bottom: 10px;
-            background: linear-gradient(to right, #7a0218, #a30423);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: 2px;

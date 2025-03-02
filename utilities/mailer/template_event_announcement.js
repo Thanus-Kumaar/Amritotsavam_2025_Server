@@ -39,7 +39,6 @@ const TEMPLATE_EVENT_ANNOUNCEMENT = (eventName, announcement) => {
             text-transform: uppercase;
             color: #4d0112;
             margin-bottom: 10px;
-            background: linear-gradient(to right, #6d071a, #b81b3c);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: 2px;
