@@ -3,17 +3,14 @@ import pandas as pd
 from dotenv import load_dotenv
 import subprocess, shutil, os
 
-# Load environment variables
-load_dotenv()
-database_user = os.getenv("DB_USERNAME")
-database_password = os.getenv("DB_PWD")
-
 def fetch_registration_data_to_dataframe():
     connection = mysql.connector.connect(
         host='localhost',
         database='amritotsavam_2025',
-        user=database_user,
-        password=database_password
+        user='amrit25',
+        password='AmriTOTsavam2$25',
+	port=3306,
+	ssl_disabled=True
     )
 
     try:
@@ -83,12 +80,19 @@ def fetch_registration_data_to_dataframe():
 
             print(f"Saved: {file_path}")
 
-        print("Deleting existing Google Drive folder...")
-        delete_cmd = "rclone purge remote:amritotsavam_participants"
-        subprocess.run(delete_cmd, shell=True, check=True)
+	# Check if the folder exists before deleting
+        check_cmd = "rclone lsf participants: | grep '^amritotsavam_participants$'"
+        result = subprocess.run(check_cmd, shell=True, capture_output=True, text=True)
+
+        if result.returncode == 0:  # Folder exists
+                print("Deleting existing Google Drive folder...")
+                delete_cmd = "rclone purge participants:amritotsavam_participants"
+                subprocess.run(delete_cmd, shell=True, check=True)
+        else:
+    	        print("Google Drive folder does not exist. Skipping deletion.")
         
         print("Uploading files to Google Drive...")
-        cmd = f"rclone copy reports remote:amritotsavam_participants --progress"
+        cmd = f"rclone copy reports participants:amritotsavam_participants --progress"
         subprocess.run(cmd, shell=True, check=True)
         print("Upload complete!")
 
