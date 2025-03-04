@@ -227,7 +227,9 @@ const adminModule = {
                 GROUP BY gd.registrationID, rd.teamName
             `;
             } else {
-                await db.query("LOCK TABLES groupDetail READ, userData READ, eventData READ");
+                await db.query(
+                    "LOCK TABLES groupDetail READ, userData READ, eventData READ",
+                );
                 query = `
                 SELECT 
                 groupDetail.registrationID,
@@ -306,6 +308,31 @@ const adminModule = {
             return setResponseOk("Fetched all users", result);
         } catch (err) {
             logError(err, "adminModule.getAllUsers", "db");
+            return setResponseInternalError();
+        } finally {
+            await db.query("UNLOCK TABLES");
+            db.release();
+        }
+    },
+    participantCount: async (type) => {
+        const db = await amritotsavamDb.promise().getConnection();
+        try {
+            await db.query(
+                "LOCK TABLES registrationData READ, groupDetail READ",
+            );
+            let count;
+            if (type === "all") {
+                [count] = await db.query(`
+                    SELECT COUNT(*) AS count FROM groupDetail JOIN registrationData ON groupDetail.registrationID = registrationData.registrationID WHERE registrationData.registrationStatus = '2'
+                `);
+            } else if (type === "distinct") {
+                [count] = await db.query(`
+                    SELECT COUNT(DISTINCT groupDetail.userID) AS count FROM groupDetail JOIN registrationData ON groupDetail.registrationID = registrationData.registrationID WHERE registrationData.registrationStatus = '2'
+                `);
+            }
+            return setResponseOk("Total participant count retrived!", count[0])
+        } catch (err) {
+            logError(err, "adminModule.participantCount", "db");
             return setResponseInternalError();
         } finally {
             await db.query("UNLOCK TABLES");

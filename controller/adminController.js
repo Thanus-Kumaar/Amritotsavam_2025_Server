@@ -203,6 +203,29 @@ const adminController = {
                 .json(response.responseBody);
         }
     },
+    participantCount: async (req, res) => {
+        const { type } = req.query;
+        if (type !== "all" && type !== "distinct") {
+            const response = setResponseBadRequest(
+                "The type can only be 'all' or 'distinct'",
+            );
+            return res
+                .status(response.responseCode)
+                .json(response.responseBody);
+        }
+        try{
+            const response = await adminModule.participantCount(type);
+            return res
+                .status(response.responseCode)
+                .json(response.responseBody);
+        } catch (error) {
+            logError(error, "adminController:participantCount", "db");
+            const response = setResponseInternalError();
+            return res
+                .status(response.responseCode)
+                .json(response.responseBody);
+        }
+    },
 };
 
 export default adminController;

@@ -202,4 +202,7 @@ adminRouter.get("/studentsOfEvent/:eventID(\\d+)", adminController.getStudentsOf
  */
 adminRouter.get("/all", adminController.getAllUsers);
 
+
+adminRouter.get("/participantCount", adminController.participantCount);
+
 export default adminRouter;
