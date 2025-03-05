@@ -85,10 +85,18 @@ const registrationModule = {
 
             // checking if the registering user's dept has reach max registrations for the event
             await db.query("LOCK TABLES deptEventMapping READ;");
-            const [currentRegistrationPerDepartment] = await db.query(
-                "SELECT * FROM deptEventMapping WHERE deptID = ? AND eventID = ?",
-                [userData[0].deptID, eventID],
-            );
+            let currentRegistrationPerDepartment;
+            if (eventData[0].eventFee == 0) {
+                [currentRegistrationPerDepartment] = await db.query(
+                    "SELECT * FROM deptEventMapping WHERE deptID = ? AND eventID = ?",
+                    [userData[0].deptID, eventID],
+                );
+            } else if (eventData[0].eventFee > 0) {
+                [currentRegistrationPerDepartment] = await db.query(
+                    "SELECT CONVERT(SUM(numRegistrations), UNSIGNED) AS numRegistrations, (maxRegistrations*7) as maxRegistrations FROM deptEventMapping WHERE eventID = ? GROUP BY eventID",
+                    [eventID],
+                );
+            }
             await db.query("UNLOCK TABLES");
 
             if (
@@ -245,13 +253,8 @@ const registrationModule = {
 
                 // Blocking the Requested Seats for the User for his/her department.
                 const [registrationUpdated] = await db.query(
-                    "UPDATE deptEventMapping SET numRegistrations = ? WHERE eventID = ? AND deptID = ?",
-                    [
-                        currentRegistrationPerDepartment[0].numRegistrations +
-                            1,
-                        eventID,
-                        userData[0].deptID,
-                    ],
+                    "UPDATE deptEventMapping SET numRegistrations = numRegistrations+1 WHERE eventID = ? AND deptID = ?",
+                    [eventID, userData[0].deptID],
                 );
 
                 if (registrationUpdated.affectedRows !== 1) {
@@ -518,13 +521,8 @@ const registrationModule = {
 
                 // Blocking the Requested Seats for the Team in the Event for his/her department.
                 const [eventDataUpdate] = await db.query(
-                    "UPDATE deptEventMapping SET numRegistrations = ? WHERE eventID = ? AND deptID = ?",
-                    [
-                        currentRegistrationPerDepartment[0].numRegistrations +
-                            1,
-                        eventID,
-                        userData[0].deptID,
-                    ],
+                    "UPDATE deptEventMapping SET numRegistrations = numRegistrations+1 WHERE eventID = ? AND deptID = ?",
+                    [eventID, userData[0].deptID],
                 );
 
                 if (eventDataUpdate.affectedRows !== 1) {
