@@ -93,7 +93,7 @@ const registrationModule = {
                 );
             } else if (eventData[0].eventFee > 0) {
                 [currentRegistrationPerDepartment] = await db.query(
-                    "SELECT CONVERT(SUM(numRegistrations), UNSIGNED) AS numRegistrations, (maxRegistrations) as maxRegistrations FROM deptEventMapping WHERE eventID = ?",
+                    "SELECT CONVERT(SUM(numRegistrations), UNSIGNED) AS numRegistrations, MAX(maxRegistrations) as maxRegistrations FROM deptEventMapping WHERE eventID = ?",
                     [eventID],
                 );
             }
