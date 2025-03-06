@@ -125,7 +125,7 @@ const registrationModule = {
                 paymentAmount =
                     eventData[0].eventFee +
                     Math.ceil(eventData[0].eventFee * 0.18);
-                productInfo = `ERI-${userID.toString()}-${eventID.toString()}-${totalMembers.toString()}-${paymentAmount.toString()}-${eventData[0].eventName.toString()}`;
+                productInfo = `AERI-${userID.toString()}-${eventID.toString()}-${totalMembers.toString()}-${paymentAmount.toString()}-${eventData[0].eventName.toString()}`;
 
                 // Checking if the txnID is present in the Table.
                 const checkDuplicateTransactionResponse =
