@@ -19,7 +19,7 @@ const checkEventExistence = async function (eventID, totalMembers, db) {
         const currDate = new Date();
         const formattedToday = currDate.toISOString().split("T")[0];
 
-        if (eventDate <= formattedToday) {
+        if (eventDate < formattedToday) {
             return setResponseBadRequest("Event has Completed !");
         }
 
