@@ -32,6 +32,7 @@ const getEventQueryFormatter = function (
         e.eventStatus,
         e.isPerHeadFee,
         e.imageUrl AS eventImageUrl,
+        MAX(dem.maxRegistrations) AS maxRegistrations,
         (
             SELECT JSON_ARRAYAGG(
                 JSON_OBJECT(
@@ -59,6 +60,10 @@ const getEventQueryFormatter = function (
             END AS isRegistered
         FROM
         eventData e
+            JOIN
+        deptEventMapping dem
+            ON e.eventID = dem.eventID
+        GROUP BY dem.eventID
         `;
         return query;
     }
@@ -85,6 +90,7 @@ const getEventQueryFormatter = function (
     e.thirdPrice,
     e.fourthPrice,
     e.fifthPrice,
+    MAX(dem.maxRegistrations) AS maxRegistrations,
     (
         SELECT JSON_ARRAYAGG(
             JSON_OBJECT(
@@ -123,7 +129,11 @@ const getEventQueryFormatter = function (
       ELSE '0'
     END AS isRegistered
     FROM
-      eventData e`;
+      eventData e
+    JOIN
+    deptEventMapping dem
+        ON e.eventID = dem.eventID
+    `;
     Object.entries(data).map((condition) => {
         if (firstCondition === true) {
             if (condition[0] == "eventIDs") {
@@ -138,6 +148,7 @@ const getEventQueryFormatter = function (
                 query += ` AND ${condition[0][0]}.${condition[0]} = ${condition[1]}`;
         }
     });
+    query += ` GROUP BY dem.eventID`;
     return query;
 };
 
