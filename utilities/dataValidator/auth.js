@@ -1,7 +1,7 @@
 import validator from "validator";
 import { isValidID, validatePhoneNumber } from "./common.js";
 
-const allowedDepartments = ["1", "2", "3", "4", "5", "6", "7"];
+const allowedDepartments = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
 // function that validates email
 const validateEmail = (email) => {
@@ -81,7 +81,7 @@ const validateSignupData = (data) => {
     }
 
     if (!allowedDepartments.includes(data.deptID))
-        return "Department should be one of 7 default ones. (should be string)";
+        return "Department should be one of 10 default ones. (should be string)";
 
     if (!validateAcademicYear(data.academicYear)) {
         return "Invalid or missing academicYear.";

@@ -5,7 +5,7 @@ import {
     validatePhoneNumber,
 } from "./common.js";
 
-const allowedDepartments = ["1", "2", "3", "4", "5", "6", "7"];
+const allowedDepartments = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
 const validateProfileData = (userData) => {
     if (!isValidID(userData.userID)) {
@@ -24,7 +24,7 @@ const validateProfileData = (userData) => {
         return "Invalid department ID.";
     }
     if (!allowedDepartments.includes(userData.deptID))
-        return "Department should be one of 7 default ones. (should be string)";
+        return "Department should be one of 10 default ones. (should be string)";
     if (
         userData.academicYear &&
         (typeof userData.academicYear !== "number" ||
