@@ -327,3 +327,16 @@ CREATE TABLE IF NOT EXISTS `notification` (
 -- INSERT INTO `notification` (`title`, `description`, `author`, `venue`, `startDate`, `endDate`, `createdAt`, `updatedAt`) VALUES 
 -- ('Curtain Raiser', 'Curtain Raiser along with the amazing Flashmob by our talented dancers.', 'Pragati Team', 'ASB Block', '2025-01-04', '2025-01-04', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 -- ('Food Fest', 'Experience the magic of our Food Fest through the eyes of our guests.', 'Pragati Team', 'AB3 Car Parking', '2025-01-05', '2025-01-08', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- table for managing scores
+
+CREATE TABLE IF NOT EXISTS `scoreboard` (
+  `scoreID` INT PRIMARY KEY AUTO_INCREMENT,
+  `eventID`INT NOT NULL,
+  `deptID` INT NOT NULL,
+  `points` INT NOT NULL,
+  `createdAt` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  `updatedAt` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+  CONSTRAINT FOREIGN KEY (`eventID`) REFERENCES `eventData` (`eventID`) ON DELETE CASCADE,
+  CONSTRAINT FOREIGN KEY (`deptID`) REFERENCES `deptData` (`deptID`) ON DELETE CASCADE
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
