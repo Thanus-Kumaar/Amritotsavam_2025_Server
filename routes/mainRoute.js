@@ -10,6 +10,7 @@ import notificationRouter from "./notificationRoute.js";
 import registrationRouter from "./registrationRoute.js";
 import transactionRouter from "./transactionRouter.js";
 import massMailerRouter from "./massMailerRouter.js";
+import scoreRouter from "./scoreRoute.js";
 
 const router = Router();
 
@@ -24,5 +25,6 @@ router.use("/registration", registrationRouter);
 router.use("/profile", profileRouter);
 router.use("/transaction", transactionRouter);
 router.use("/mailer", massMailerRouter);
+router.use("/score", scoreRouter);
 
 export default router;
